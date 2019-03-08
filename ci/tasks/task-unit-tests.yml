@@ -15,4 +15,7 @@ outputs:
 - name: coverage-results
 
 run:
-  path: ./hello-go-deploy-marathon/ci/scripts/unit-tests.sh
+  path: ./hello-go-deploy-marathon/ci/scripts/unit-tests.sh -v
+  # args: [-concourse]
+  args: [-concourse -debug]
+  
