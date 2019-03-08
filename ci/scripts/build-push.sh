@@ -67,8 +67,8 @@ else
     echo " "
 fi
 
-echo "Create a binary hello-go"
-go build -o build-push/hello-go main.go
+echo "Create a binary hello-go in /bin"
+go build -o bin/hello-go main.go
 echo ""
 
 # CONCOURSE
@@ -79,7 +79,7 @@ then
     echo " "
 
     echo "cp the binary into /dist"
-    cp $GOPATH/src/github.com/JeffDeCola/hello-go-deploy-marathon/build-push/hello-go .
+    cp $GOPATH/src/github.com/JeffDeCola/hello-go-deploy-marathon/bin/hello-go .
     echo " "
 
     echo "cp the Dockerfile into /dist"
@@ -97,8 +97,8 @@ else
     cd build-push
     echo " "
 
-    echo "Build docker image "
-    docker build -t jeffdecola/hello-go .
+    echo "Build docker image from binary /bin/hello-go"
+    docker build -t jeffdecola/hello-go ../bin/hello-go
     echo " "
 fi
 
