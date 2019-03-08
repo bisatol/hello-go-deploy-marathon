@@ -22,7 +22,7 @@ I used go as my language.  Feel free to use another one,
 
 To build a docker image you will need docker on your machine,
 
-* [docker](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/operations-tools/orchestration/builds-deployment-containers/docker-cheat-sheet)
+* [docker](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/orchestration/builds-deployment-containers/docker-cheat-sheet)
 
 To push a docker image you will need,
 
@@ -30,12 +30,12 @@ To push a docker image you will need,
 
 To deploy to mesos/marathon you will need,
 
-* [marathon](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/operations-tools/orchestration/cluster-managers-resource-management-scheduling/marathon-cheat-sheet-sheet)
-* [mesos](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/operations-tools/orchestration/cluster-managers-resource-management-scheduling/mesos-cheat-sheet)
+* [marathon](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/orchestration/cluster-managers-resource-management-scheduling/marathon-cheat-sheet)
+* [mesos](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/orchestration/cluster-managers-resource-management-scheduling/mesos-cheat-sheet)
 
-As a bonus, if you want, I used Concourse CI to run my scripts,
+As a bonus, you can use Concourse CI to run the scripts,
 
-* [concourse](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/operations-tools/continuous-integration-continuous-deployment/concourse-cheat-sheet).
+* [concourse](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/operations-tools/continuous-integration-continuous-deployment/concourse-cheat-sheet)
 
 ## RUN
 
@@ -66,26 +66,25 @@ This is the test script `/ci/scripts/unit-tests.sh` used by concourse.
 
 ## STEP 2 - BUILD
 
-Lets build a docker image from your code.
+Lets build a docker image from your binary /bin/hello-go.
 
 First, create a binary `hello-go`,
 
 ```bash
-go build -o build-push/hello-go main.go
+go build -o bin/hello-go main.go
 ```
 
-Note the Dockerfile is in this directory.
-
-Build your docker image using Dockerfile,
+Build your docker image from binary /bin/hello-go
+using /build-push/Dockerfile,
 
 ```bash
 cd build-push
-docker build -t jeffdecola/hello-go .
+docker build -t jeffdecola/hello-go ../bin/hello-go
 ```
 
 Obviously, replace `jeffdecola` with your DockerHub username.
 
-Check your docker images,
+Check your docker images on your machine,
 
 ```bash
 docker images
