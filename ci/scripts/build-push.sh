@@ -1,10 +1,7 @@
 #!/bin/sh
-# hello-go-deploy-marathon deploy.sh
-
-#!/bin/sh
 # hello-go-deploy-marathon build-push.sh
 
-echo ""
+echo " "
 
 # SCRIPT ARGUMENTS build-push.sh -concourse -debug
 if [ "$1" = "-concourse" ]
@@ -33,7 +30,7 @@ fi
 # CONCOURSE
 if [ "$1" = "-concourse" ]
 then
-    echo "The goal is to set up a go src/github.com/JeffDeCola/hello-go-deploy-marathon directory."
+    echo "????????"
     echo "Then you can run go test in that directory."
     echo " "
     echo "At start, you should be in a /tmp/build/xxxxx directory with two folders:"
@@ -50,6 +47,16 @@ then
     export GOPATH=$PWD
     echo " "
 
+    echo "Now we must move our code from the current directory ./hello-go-deploy-marathon to" 
+    echo "$GOPATH/src/github.com/JeffDeCola/hello-go-deploy-marathon"
+    mkdir -p src/github.com/JeffDeCola/
+    cp -R ./hello-go-deploy-marathon src/github.com/JeffDeCola/.
+    echo " "
+
+    echo "cd src/github.com/JeffDeCola/hello-go-deploy-marathon"
+    cd src/github.com/JeffDeCola/hello-go-deploy-marathon
+    echo " "
+
     echo "Check that you are set and everything is in the right place for go:"
     echo "gopath is: $GOPATH"
     echo "pwd is: $PWD"
@@ -61,6 +68,39 @@ else
     cd ../..
 fi
 
-# List whats in the app.json file
-echo "List whats in the app.json file"
-cat hello-go-deploy-marathon/app.json
+
+
+
+
+
+
+
+
+
+
+
+# Put the binary hello-go-deploy-marathon filename in /dist
+go build -o dist/hello-go-deploy-marathon ./main.go
+
+# cp the Dockerfile into /dist
+cp ci/Dockerfile dist/Dockerfile
+
+# Check
+echo "List whats in the /dist directory"
+ls -lat dist
+echo ""
+
+# Move what you need to $GOPATH/dist
+# BECAUSE the resource type docker-image works in /dist.
+cp -R "./dist" "$GOPATH/."
+
+cd "$GOPATH"
+# Check whats here
+echo "List whats in top directory"
+ls -lat 
+echo ""
+
+# Check whats in /dist
+echo "List whats in /dist"
+ls -lat dist
+echo ""
