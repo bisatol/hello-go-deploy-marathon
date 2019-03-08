@@ -30,8 +30,8 @@ fi
 # CONCOURSE
 if [ "$1" = "-concourse" ]
 then
-    echo "The goal is to set up a go src/github.com/JeffDeCola/hello-go-deploy-marathon directory."
-    echo "Then you can run go test in that directory."
+    echo "The goal is to set up a go src/github.com/JeffDeCola/hello-go-deploy-marathon directory"
+    echo "Then you can run go test in that directory"
     echo " "
 
     echo "At start, you should be in a /tmp/build/xxxxx directory with two folders:"
@@ -42,11 +42,11 @@ then
     echo "pwd is: $PWD"
     echo " "
 
-    echo "List whats in the current directory."
+    echo "List whats in the current directory"
     ls -la
     echo " "
 
-    echo "Setup the GOPATH based on current directory."
+    echo "Setup the GOPATH based on current directory"
     export GOPATH=$PWD
     echo " "
 
@@ -67,29 +67,29 @@ then
     echo " "
 
 else
-    echo "cd up to /hello-go-deploy-marathon directory."
+    echo "cd up to /hello-go-deploy-marathon directory"
     cd ../..
     echo " "
 fi
 
 echo "Run go test -cover"
-echo "   -cover shows the percentage coverage."
+echo "   -cover shows the percentage coverage"
 echo "   Put results in /test/test_coverage.txt file"
 go test -cover ./... | tee test/test_coverage.txt
 echo " "
 
-echo "Clean test_coverage.txt file - add some whitespace to the begining of each line."
+echo "Clean test_coverage.txt file - add some whitespace to the begining of each line"
 sed -i -e 's/^/     /' test/test_coverage.txt
 echo " "
 
 # CONCOURSE
 if [ "$1" = "-concourse" ]
 then
-    echo "The test_coverage.txt file will be used by the concourse pipeline to send to slack."
+    echo "The test_coverage.txt file will be used by the concourse pipeline to send to slack"
     echo " "
 
-    echo "Move text_coverage.txt to /coverage-results directory."
-    mv "test/test_coverage.txt" "$GOPATH/coverage-results/."
+    echo "Move text_coverage.txt to /coverage-results directory"
+    mv "test/test_coverage.txt" "$GOPATH/coverage-results/"
     echo " "
 fi
 

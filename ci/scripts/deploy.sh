@@ -33,7 +33,7 @@ fi
 # CONCOURSE
 if [ "$1" = "-concourse" ]
 then
-    echo "The goal is to set up a go src/github.com/JeffDeCola/hello-go-deploy-marathon directory."
+    echo "The goal is to set up a go src/github.com/JeffDeCola/hello-go-deploy-marathon directory"
     echo "Then you can run go test in that directory."
     echo " "
     echo "At start, you should be in a /tmp/build/xxxxx directory with two folders:"
@@ -42,11 +42,11 @@ then
     echo " "
     echo "pwd is: $PWD"
     echo " "
-    echo "List whats in the current directory."
+    echo "List whats in the current directory"
     ls -la
     echo " "
 
-    echo "Setup the GOPATH based on current directory."
+    echo "Setup the GOPATH based on current directory"
     export GOPATH=$PWD
     echo " "
 
@@ -56,7 +56,7 @@ then
     ls -la
 
 else
-    echo "cd up to /hello-go-deploy-marathon directory."
+    echo "cd up to /hello-go-deploy-marathon directory"
     echo " "
     cd ../..
 fi

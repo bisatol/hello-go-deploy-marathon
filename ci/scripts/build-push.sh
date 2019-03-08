@@ -38,11 +38,11 @@ then
     echo " "
     echo "pwd is: $PWD"
     echo " "
-    echo "List whats in the current directory."
+    echo "List whats in the current directory"
     ls -la
     echo " "
 
-    echo "Setup the GOPATH based on current directory."
+    echo "Setup the GOPATH based on current directory"
     export GOPATH=$PWD
     echo " "
 
@@ -62,7 +62,7 @@ then
     ls -la
 
 else
-    echo "cd up to /hello-go-deploy-marathon directory."
+    echo "cd up to /hello-go-deploy-marathon"
     cd ../..
     echo " "
 fi
@@ -79,26 +79,26 @@ then
     echo " "
 
     echo "cp the binary into /dist"
-    cp $GOPATH/src/github.com/JeffDeCola/hello-go-deploy-marathon/bin/hello-go .
+    cp "$GOPATH/src/github.com/JeffDeCola/hello-go-deploy-marathon/bin/hello-go" .
     echo " "
 
     echo "cp the Dockerfile into /dist"
-    cp $GOPATH/src/github.com/JeffDeCola/hello-go-deploy-marathon/build-push/Dockerfile .
+    cp "$GOPATH/src/github.com/JeffDeCola/hello-go-deploy-marathon/build-push/Dockerfile" .
     echo " "
 
     echo "List whats in the /dist directory"
     ls -lat dist
     echo " "
 
-    echo "The pipeline will build and push the docker image to DockerHub"
+    echo "The concourse pipeline will build and push the docker image to DockerHub"
     echo " "
 else
     echo "cd build-push"
     cd build-push
     echo " "
 
-    echo "Build docker image from binary /bin/hello-go"
-    docker build -t jeffdecola/hello-go ../bin/hello-go
+    echo "Build your docker image from binary /bin/hello-go using /build-push/Dockerfile"
+    docker build -t jeffdecola/hello-go-deploy-marathon .
     echo " "
 fi
 
