@@ -30,8 +30,7 @@ fi
 # CONCOURSE
 if [ "$1" = "-concourse" ]
 then
-    echo "????????"
-    echo "Then you can run go test in that directory."
+    echo "The goal is to create a binary and place in /dist directory with a Dockerfile"
     echo " "
     echo "At start, you should be in a /tmp/build/xxxxx directory with two folders:"
     echo "   /hello-go-deploy-marathon"
@@ -64,43 +63,44 @@ then
 
 else
     echo "cd up to /hello-go-deploy-marathon directory."
-    echo " "
     cd ../..
+    echo " "
 fi
 
-
-
-
-
-
-
-
-
-
-
-
-# Put the binary hello-go-deploy-marathon filename in /dist
-go build -o dist/hello-go-deploy-marathon ./main.go
-
-# cp the Dockerfile into /dist
-cp ci/Dockerfile dist/Dockerfile
-
-# Check
-echo "List whats in the /dist directory"
-ls -lat dist
+echo "Create a binary hello-go"
+go build -o build-push/hello-go main.go
 echo ""
 
-# Move what you need to $GOPATH/dist
-# BECAUSE the resource type docker-image works in /dist.
-cp -R "./dist" "$GOPATH/."
+# CONCOURSE
+if [ "$1" = "-concourse" ]
+then
+    echo "goto /dist directory"
+    cd "$GOPATH/dist"
+    echo " "
 
-cd "$GOPATH"
-# Check whats here
-echo "List whats in top directory"
-ls -lat 
-echo ""
+    echo "cp the binary into /dist"
+    cp $GOPATH/src/github.com/JeffDeCola/hello-go-deploy-marathon/build-push/hello-go .
+    echo " "
 
-# Check whats in /dist
-echo "List whats in /dist"
-ls -lat dist
-echo ""
+    echo "cp the Dockerfile into /dist"
+    cp $GOPATH/src/github.com/JeffDeCola/hello-go-deploy-marathon/build-push/Dockerfile .
+    echo " "
+
+    echo "List whats in the /dist directory"
+    ls -lat dist
+    echo " "
+
+    echo "The pipeline will build and push the docker image to DockerHub"
+    echo " "
+else
+    echo "cd build-push"
+    cd build-push
+    echo " "
+
+    echo "Build docker image "
+    docker build -t jeffdecola/hello-go .
+    echo " "
+fi
+
+echo "build-push.sh -concoure -debug (END)"
+echo " "

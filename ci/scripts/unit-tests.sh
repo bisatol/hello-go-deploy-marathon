@@ -74,12 +74,12 @@ fi
 
 echo "Run go test -cover"
 echo "   -cover shows the percentage coverage."
-echo "   Put results in test_coverage.txt file"
-go test -cover ./... | tee test_coverage.txt
+echo "   Put results in /test/test_coverage.txt file"
+go test -cover ./... | tee test/test_coverage.txt
 echo " "
 
 echo "Clean test_coverage.txt file - add some whitespace to the begining of each line."
-sed -i -e 's/^/     /' test_coverage.txt
+sed -i -e 's/^/     /' test/test_coverage.txt
 echo " "
 
 # CONCOURSE
@@ -89,9 +89,9 @@ then
     echo " "
 
     echo "Move text_coverage.txt to /coverage-results directory."
-    mv "test_coverage.txt" "$GOPATH/coverage-results/."
+    mv "test/test_coverage.txt" "$GOPATH/coverage-results/."
     echo " "
 fi
 
-echo "unit-test.sh - END"
+echo "unit-test.sh (END)"
 echo " "
