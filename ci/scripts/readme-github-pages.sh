@@ -30,8 +30,8 @@ fi
 # CONCOURSE
 if [ "$1" = "-concourse" ]
 then
-    echo "The goal is to git clone /hello-go-deploy-marathon to /hello-go-deploy-marathon-updated."
-    echo "Then you can edit the /docs/_includes/README.md for GITHUB WEBPAGES in that directory."
+    echo "The goal is to git clone /hello-go-deploy-marathon to /hello-go-deploy-marathon-updated"
+    echo "Then you can edit the /docs/_includes/README.md for GITHUB WEBPAGES in that directory"
     echo " "
 
     echo "At start, you should be in a /tmp/build/xxxxx directory with two folders:"
@@ -42,7 +42,7 @@ then
     echo "pwd is: $PWD"
     echo " "
 
-    echo "List whats in the current directory."
+    echo "List whats in the current directory"
     ls -la
     echo " "
 
@@ -54,12 +54,12 @@ then
     cd hello-go-deploy-marathon-updated
     echo " "
 
-    echo "List whats in the current directory."
+    echo "List whats in the current directory"
     ls -la
     echo " "
 
 else
-    echo "cd up to /hello-go-deploy-marathon directory."
+    echo "cd up to /hello-go-deploy-marathon directory"
     echo " "
     cd ../..
 fi
@@ -118,7 +118,7 @@ then
         echo " "
     fi
 
-    echo "ONLY git add and commit what is needed to protect from unforseen issues."
+    echo "ONLY git add and commit what is needed to protect from unforseen issues"
     echo "git add"
     git add docs/_includes/README.md
     echo "git commit"

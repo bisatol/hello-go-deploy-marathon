@@ -69,6 +69,7 @@ This is the test script `/ci/scripts/unit-tests.sh` used by concourse.
 Lets build a docker image from your binary /bin/hello-go.
 
 First, create a binary `hello-go`,
+I keep them in /bin and use .gitignore for this directory.
 
 ```bash
 go build -o bin/hello-go main.go
@@ -79,7 +80,7 @@ using /build-push/Dockerfile,
 
 ```bash
 cd build-push
-docker build -t jeffdecola/hello-go ../bin/hello-go
+docker build -t jeffdecola/hello-go-deploy-marathon .
 ```
 
 Obviously, replace `jeffdecola` with your DockerHub username.
