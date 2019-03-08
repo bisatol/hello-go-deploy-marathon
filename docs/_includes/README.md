@@ -1,24 +1,38 @@
 
 # REQUIREMENTS
 
-You obviously need
-[concourse](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/operations-tools/continuous-integration-continuous-deployment/concourse-cheat-sheet).
+I used go as my language.  Feel free to use another one,
 
-To build you will need,
+* [go](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/development/languages/go-cheat-sheet).
 
-* DockerHub account
-* For manual testing,
-  [docker](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/operations-tools/orchestration/builds-deployment-containers/docker-cheat-sheet)
+To build a docker image you will need,
+
+* [docker](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/operations-tools/orchestration/builds-deployment-containers/docker-cheat-sheet)
   running on your machine.
+
+To push a docker image you will need,
+
+* [DockerHub account](https://hub.docker.com/).
 
 To deploy you will need,
 
 * [marathon](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/operations-tools/orchestration/cluster-managers-resource-management-scheduling/marathon-cheat-sheet-sheet)
 * [mesos](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/operations-tools/orchestration/cluster-managers-resource-management-scheduling/mesos-cheat-sheet)
 
-## LONG-RUNNING APP FOR MARATHON
+As a bonus, if you want, I used Concourse CI to run my scripts.
+You could just run them manually.
 
-Written in go, every 3 seconds `hello-go` will print:
+* [concourse](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/operations-tools/continuous-integration-continuous-deployment/concourse-cheat-sheet).
+
+## RUN
+
+To run from the command line,
+
+```bash
+go run main.go
+```
+
+Every 2 seconds `hello-go-deploy-marathon` will print:
 
 ```bash
 Hello everyone, count is: 1
@@ -27,13 +41,20 @@ Hello everyone, count is: 3
 etc...
 ```
 
-## RUN SOURCE CODE FROM THE COMMAND LINE
+## STEP 1 - TEST
 
-```bash
-go run main.go
+Lets unit test your code.
+
+```go
+go test -cover ./... | tee test_coverage.txt
 ```
 
-## BUILD - DOCKER IMAGE
+There is script `/ci/scripts/unit-tests.sh`, but this
+is mainly for concourse.
+
+## STEP 2 - BUILD
+
+Lets build a docker image from your code.
 
 Create a binary `hello-go`,
 
@@ -62,6 +83,34 @@ docker images
 ```
 
 It will be listed as `jeffdecola/hello-go`
+
+There is script `/ci/scripts/build-push.sh`, but this
+is mainly for concourse.
+
+## STEP 3 - PUSH
+
+Lets push your built docker image to DockerHub.
+
+```go
+```
+
+There is script `/ci/scripts/build-push.sh`, but this
+is mainly for concourse.
+
+## STEP 4 - DEPLOY
+
+Lets pull the image from DockerHub to deploy to mesos/marathon.
+
+```go
+```
+
+There is script `/ci/scripts/deploy.sh`, but this
+is mainly for concourse.
+
+
+
+
+
 
 ## BUILD - PUSH DOCKER IMAGE TO DOCKER HUB
 
@@ -103,7 +152,8 @@ The `hello-go` docker image can now be manually deployed from
 DockerHub to mesos/marathon by using the command:
 
 ```bash
-curl -X PUT http://10.141.141.10:8080/v2/apps/hello-go-long-running -d @app.json \
+curl -X PUT http://10.141.141.10:8080/v2/apps/hello-go-long-running \
+-d @app.json \
 -H "Content-type: application/json"
 ```
 
@@ -141,4 +191,4 @@ deploys the newly created docker image to marathon.
   ci resources.
 
 For more information on using concourse for continuous integration,
-refer to my cheat sheet on [concourse](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/operations-tools/continuous-integration-continuous-deployment/concourse-cheat-sheet).
+refer to my cheat sheet on [concourse](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/continuous-integration-continuous-deployment/concourse-cheat-sheet).
