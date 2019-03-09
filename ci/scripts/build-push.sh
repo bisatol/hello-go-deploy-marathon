@@ -93,6 +93,10 @@ then
     echo "The concourse pipeline will build and push the docker image to DockerHub"
     echo " "
 else
+    echo "Copy the binary in /build-push because docker needs it with Dockerfile"
+    cp /bin/hello-go /build-push/.
+    echo " "
+
     echo "cd build-push"
     cd build-push
     echo " "
@@ -101,6 +105,6 @@ else
     docker build -t jeffdecola/hello-go-deploy-marathon .
     echo " "
 fi
-
+c
 echo "build-push.sh -concoure -debug (END)"
 echo " "

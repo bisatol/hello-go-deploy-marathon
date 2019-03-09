@@ -5,7 +5,7 @@ FROM alpine
 LABEL Jeff DeCola (https://github.com/JeffDeCola/hello-go-deploy-marathon)
 
 # Put the binary into the container
-COPY ../bin/hello-go /
+COPY hello-go /
 
 # Add the ailibty to /bin/bash
 RUN apk add --update bash && rm -rf /var/cache/apk/*

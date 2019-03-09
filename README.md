@@ -75,6 +75,12 @@ I keep them in /bin and use .gitignore for this directory.
 go build -o bin/hello-go main.go
 ```
 
+Copy the binary in /build-push because docker needs it with Dockerfile
+
+```bash
+cp /bin/hello-go /build-push/.
+```
+
 Build your docker image from binary /bin/hello-go
 using /build-push/Dockerfile,
 
@@ -91,7 +97,7 @@ Check your docker images on your machine,
 docker images
 ```
 
-It will be listed as `jeffdecola/hello-go`
+It will be listed as `jeffdecola/hello-go-deploy-marathon`
 
 This is the build script `/ci/scripts/build-push.sh` used by concourse.
 
