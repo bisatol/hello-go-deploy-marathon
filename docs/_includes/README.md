@@ -39,7 +39,7 @@ Hello everyone, count is: 3
 etc...
 ```
 
-## STEP 1 - TEST
+## STEP 1 - TEST HI JEFF
 
 Lets unit test the code,
 
@@ -47,7 +47,7 @@ Lets unit test the code,
 go test -cover ./... | tee /test/test_coverage.txt
 ```
 
-This is the test script `/ci/scripts/unit-tests.sh` used by concourse.
+`/ci/scripts/unit-tests.sh` is used by concourse.
 
 ## STEP 2 - BUILD
 
@@ -105,7 +105,7 @@ docker push jeffdecola/hello-go-deploy-marathon
 Check you image at DockerHub. My image is
 [https://hub.docker.com/r/jeffdecola/hello-go-deploy-marathon](https://hub.docker.com/r/jeffdecola/hello-go-deploy-marathon).
 
-Erase your local image first to prove it pulls it from dockerhub,
+Erase your local docker image first to prove it pulls it from dockerhub,
 
 ```bash
 docker rmi jeffdecola/hello-go-deploy-marathon

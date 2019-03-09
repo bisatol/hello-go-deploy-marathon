@@ -16,5 +16,5 @@ outputs:
 
 run:
   path: ./hello-go-deploy-marathon/ci/scripts/readme-github-pages.sh
-  # args: [-concourse]
-  args: [-concourse -debug]
+  args: [-debug]
+

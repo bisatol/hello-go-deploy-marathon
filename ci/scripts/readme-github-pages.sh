@@ -3,66 +3,50 @@
 
 echo " "
 
-# SCRIPT ARGUMENTS readme-github-pages.sh -concourse -debug
-if [ "$1" = "-concourse" ]
+if [ "$1" = "-debug" ]
 then
-    if [ "$2" = "-debug" ]
-    then
-        echo "readme-github-pages.sh -concoure -debug (START)"
-        echo " "
-        # set -e causes the shell to exit if any subcommand or pipeline returns a non-zero status. Needed for concourse.
-        # set -x enables a mode of the shell where all executed commands are printed to the terminal.
-        set -e -x
-        echo " "
-    else
-        echo "readme-github-pages.sh -concourse (START)"
-        echo " "
-        # set -e causes the shell to exit if any subcommand or pipeline returns a non-zero status.  Needed for concourse.
-        echo " "
-        set -e
-        echo " "
-    fi
+    echo "readme-github-pages.sh -debug (START)"
+    echo " "
+    # set -e causes the shell to exit if any subcommand or pipeline returns a non-zero status. Needed for concourse.
+    # set -x enables a mode of the shell where all executed commands are printed to the terminal.
+    set -e -x
+    echo " "
 else
     echo "readme-github-pages.sh (START)"
     echo " "
+    # set -e causes the shell to exit if any subcommand or pipeline returns a non-zero status.  Needed for concourse.
+    echo " "
+    set -e
+    echo " "
 fi
 
-# CONCOURSE
-if [ "$1" = "-concourse" ]
-then
-    echo "The goal is to git clone /hello-go-deploy-marathon to /hello-go-deploy-marathon-updated"
-    echo "Then you can edit the /docs/_includes/README.md for GITHUB WEBPAGES in that directory"
-    echo " "
+echo "The goal is to git clone /hello-go-deploy-marathon to /hello-go-deploy-marathon-updated"
+echo "Then you can edit the /docs/_includes/README.md for GITHUB WEBPAGES in that directory"
+echo " "
 
-    echo "At start, you should be in a /tmp/build/xxxxx directory with two folders:"
-    echo "   /hello-go-deploy-marathon"
-    echo "   /hello-go-deploy-marathon-updated (created in task-build-push.yml task file)"
-    echo " "
+echo "At start, you should be in a /tmp/build/xxxxx directory with two folders:"
+echo "   /hello-go-deploy-marathon"
+echo "   /hello-go-deploy-marathon-updated (created in task-build-push.yml task file)"
+echo " "
 
-    echo "pwd is: $PWD"
-    echo " "
+echo "pwd is: $PWD"
+echo " "
 
-    echo "List whats in the current directory"
-    ls -la
-    echo " "
+echo "List whats in the current directory"
+ls -la
+echo " "
 
-    echo "git clone hello-go-deploy-marathon to hello-go-deploy-marathon-updated"
-    git clone hello-go-deploy-marathon hello-go-deploy-marathon-updated
-    echo " "
+echo "git clone hello-go-deploy-marathon to hello-go-deploy-marathon-updated"
+git clone hello-go-deploy-marathon hello-go-deploy-marathon-updated
+echo " "
 
-    echo "cd hello-go-deploy-marathon-updated"
-    cd hello-go-deploy-marathon-updated
-    echo " "
+echo "cd hello-go-deploy-marathon-updated"
+cd hello-go-deploy-marathon-updated
+echo " "
 
-    echo "List whats in the current directory"
-    ls -la
-    echo " "
-
-else
-    echo "cd up to /hello-go-deploy-marathon directory"
-    echo " "
-    cd ../..
-fi
+echo "List whats in the current directory"
+ls -la
+echo " "
 
 echo "FOR GITHUB WEBPAGES"
 echo "THE GOAL IS TO COPY README.md to /docs/_includes/README.md"
@@ -104,46 +88,33 @@ then
     cp temp-README.md docs/_includes/README.md
     echo " "
 
-    echo "remove temp-README.md"
-    rm temp-README.md
+    echo "update some global git variables"
+    git config --global user.email "jeff@keeperlabs.com"
+     git config --global user.name "Jeff DeCola (Concourse)"
     echo " "
-    
-    if [ "$1" = "-concourse" ]
-    then
-        echo "update some global git variables"
-        git config --global user.email "jeff@keeperlabs.com"
-        git config --global user.name "Jeff DeCola (Concourse)"
-        echo " "
-        git config --list
-        echo " "
-    fi
-
-    echo "ONLY git add and commit what is needed to protect from unforseen issues"
-    echo "git add"
-    git add docs/_includes/README.md
-    echo "git commit"
-    git commit -m "Update docs/_includes/README.md for GitHub Page"
-    echo " "
-
-    echo "git status"
-    git status
-    echo " "
-
-    if [ "$1" = "-concourse" ]
-    then
-        echo "git push not needed in concourse since its done in pipeline"
-        echo " "
-    else
-        echo "git push"
-        git push
-        echo " "
-    fi
-
-else
-    echo "remove temp-README.md"
-    rm temp-README.md
+    git config --list
     echo " "
 fi
+
+echo "ONLY git add and commit what is needed to protect from unforseen issues"
+echo "git add"
+git add docs/_includes/README.md
+echo " "
+
+echo "git commit"
+git commit -m "Update docs/_includes/README.md for GitHub Page"
+echo " "
+
+echo "git status"
+git status
+echo " "
+    
+echo "git push  - not needed in concourse since its done in pipeline"
+echo " "
+   
+echo "remove temp-README.md"
+rm temp-README.md
+echo " "
 
 echo "readme-github-pages.sh (END)"
 echo " "
