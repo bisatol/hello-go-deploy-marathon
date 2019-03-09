@@ -1,28 +1,26 @@
 
-# REQUIREMENTS
+# PREREQUISITES
 
 I used go as my language.  Feel free to use another one,
 
-* [go](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/development/languages/go-cheat-sheet).
+* [go](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/development/languages/go-cheat-sheet)
 
-To build a docker image you will need,
+To build a docker image you will need docker on your machine,
 
-* [docker](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/operations-tools/orchestration/builds-deployment-containers/docker-cheat-sheet)
-  running on your machine.
+* [docker](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/orchestration/builds-deployment-containers/docker-cheat-sheet)
 
 To push a docker image you will need,
 
-* [DockerHub account](https://hub.docker.com/).
+* [DockerHub account](https://hub.docker.com/)
 
-To deploy you will need,
+To deploy to mesos/marathon you will need,
 
-* [marathon](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/operations-tools/orchestration/cluster-managers-resource-management-scheduling/marathon-cheat-sheet-sheet)
-* [mesos](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/operations-tools/orchestration/cluster-managers-resource-management-scheduling/mesos-cheat-sheet)
+* [marathon](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/orchestration/cluster-managers-resource-management-scheduling/marathon-cheat-sheet)
+* [mesos](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/orchestration/cluster-managers-resource-management-scheduling/mesos-cheat-sheet)
 
-As a bonus, if you want, I used Concourse CI to run my scripts.
-You could just run them manually.
+As a bonus, you can use Concourse CI to run the scripts,
 
-* [concourse](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/operations-tools/continuous-integration-continuous-deployment/concourse-cheat-sheet).
+* [concourse](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/operations-tools/continuous-integration-continuous-deployment/concourse-cheat-sheet)
 
 ## RUN
 
@@ -43,59 +41,85 @@ etc...
 
 ## STEP 1 - TEST
 
-Lets unit test your code.
+Lets unit test the code,
 
 ```go
-go test -cover ./... | tee test_coverage.txt
+go test -cover ./... | tee /test/test_coverage.txt
 ```
 
-There is script `/ci/scripts/unit-tests.sh`, but this
-is mainly for concourse.
+This is the test script `/ci/scripts/unit-tests.sh` used by concourse.
 
 ## STEP 2 - BUILD
 
-Lets build a docker image from your code.
+Lets build a docker image from your binary /bin/hello-go.
 
-Create a binary `hello-go`,
+First, create a binary `hello-go`,
+I keep them in /bin and use .gitignore for this directory.
 
 ```bash
-go build -o hello-go main.go
+go build -o bin/hello-go main.go
 ```
 
-Grab the Dockerfile to put in this directory,
+Copy the binary in /build-push because docker needs it with Dockerfile
 
 ```bash
-cp ci/Dockerfile .
+cp bin/hello-go build-push/.
 ```
 
-Build your docker image using Dockerfile,
+Build your docker image from binary /bin/hello-go
+using /build-push/Dockerfile,
 
 ```bash
-docker build -t jeffdecola/hello-go .
+cd build-push
+docker build -t jeffdecola/hello-go-deploy-marathon .
 ```
 
 Obviously, replace `jeffdecola` with your DockerHub username.
 
-Check your docker images,
+Check your docker images on your machine,
 
 ```bash
 docker images
 ```
 
-It will be listed as `jeffdecola/hello-go`
+It will be listed as `jeffdecola/hello-go-deploy-marathon`
 
-There is script `/ci/scripts/build-push.sh`, but this
-is mainly for concourse.
+This is the build script `/ci/scripts/build-push.sh` used by concourse.
 
 ## STEP 3 - PUSH
 
 Lets push your built docker image to DockerHub.
 
-```go
+If you are not logged in, you need to login to dockerhub,
+
+```bash
+docker login
 ```
 
-There is script `/ci/scripts/build-push.sh`, but this
-is mainly for concourse.
+Once logged in you can push,
+
+```bash
+docker push jeffdecola/hello-go-deploy-marathon
+```
+
+Check you image at DockerHub. My image is
+[https://hub.docker.com/r/jeffdecola/hello-go-deploy-marathon](https://hub.docker.com/r/jeffdecola/hello-go-deploy-marathon).
+
+Erase your local image first to prove it pulls it from dockerhub,
+
+```bash
+docker rmi jeffdecola/hello-go-deploy-marathon
+```
+
+Now run it. Docker will grab the image from dockerHub
+and start a docker container on your machine.
+You can run in interactive mode (-i). Press `ctrl-c` to stop.
+
+```bash
+docker run -t -i jeffdecola/hello-go-deploy-marathon
+```
+
+This is the push script `/ci/scripts/build-push.sh` used by concourse.
 
 ## STEP 4 - DEPLOY
 
@@ -104,41 +128,9 @@ Lets pull the image from DockerHub to deploy to mesos/marathon.
 ```go
 ```
 
-There is script `/ci/scripts/deploy.sh`, but this
-is mainly for concourse.
+This is the deploy script `/ci/scripts/deploy.sh` used by concourse.
 
 
-
-
-
-
-## BUILD - PUSH DOCKER IMAGE TO DOCKER HUB
-
-Push to your newly built docker image to DockerHub.
-
-```bash
-docker login
-docker push jeffdecola/hello-go
-```
-
-Check you image at DockerHub. My image is
-[https://hub.docker.com/r/jeffdecola/hello-go](https://hub.docker.com/r/jeffdecola/hello-go).
-
-Once image is is on DockerHub, you can run in interactive mode (-i)
-so you can `ctrl-c` to stop.
-
-Erase your local image first to prove it grabs it from dockerhub,
-
-```bash
-docker rmi jeffdecola/hello-go
-```
-
-Now run it. Docker will grab the image from dockerHub
-and start a docker container on your machine.
-
-```bash
-docker run -t -i jeffdecola/hello-go
-```
 
 ## DEPLOY - APP TO MARATHON
 
