@@ -104,7 +104,11 @@ else
     echo "Build your docker image from binary /bin/hello-go using /build-push/Dockerfile"
     docker build -t jeffdecola/hello-go-deploy-marathon .
     echo " "
+
+    echo "Assuming you are logged in, lets push your built docker image to DockerHub"
+    docker push jeffdecola/hello-go-deploy-marathon
+    echo
 fi
-c
+
 echo "build-push.sh -concoure -debug (END)"
 echo " "

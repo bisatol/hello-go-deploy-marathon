@@ -78,7 +78,7 @@ go build -o bin/hello-go main.go
 Copy the binary in /build-push because docker needs it with Dockerfile
 
 ```bash
-cp /bin/hello-go /build-push/.
+cp bin/hello-go build-push/.
 ```
 
 Build your docker image from binary /bin/hello-go
@@ -105,7 +105,33 @@ This is the build script `/ci/scripts/build-push.sh` used by concourse.
 
 Lets push your built docker image to DockerHub.
 
-```go
+If you are not logged in, you need to login to dockerhub,
+
+```bash
+docker login
+```
+
+Once logged in you can push,
+
+```bash
+docker push jeffdecola/hello-go-deploy-marathon
+```
+
+Check you image at DockerHub. My image is
+[https://hub.docker.com/r/jeffdecola/hello-go-deploy-marathon](https://hub.docker.com/r/jeffdecola/hello-go-deploy-marathon).
+
+Erase your local image first to prove it pulls it from dockerhub,
+
+```bash
+docker rmi jeffdecola/hello-go-deploy-marathon
+```
+
+Now run it. Docker will grab the image from dockerHub
+and start a docker container on your machine.
+You can run in interactive mode (-i). Press `ctrl-c` to stop.
+
+```bash
+docker run -t -i jeffdecola/hello-go-deploy-marathon
 ```
 
 This is the push script `/ci/scripts/build-push.sh` used by concourse.
@@ -122,43 +148,7 @@ This is the deploy script `/ci/scripts/deploy.sh` used by concourse.
 
 
 
-
-
-
-
-
-
-
-
-## BUILD - PUSH DOCKER IMAGE TO DOCKER HUB
-
-Push to your newly built docker image to DockerHub.
-
-```bash
-docker login
-docker push jeffdecola/hello-go
-```
-
-Check you image at DockerHub. My image is
-[https://hub.docker.com/r/jeffdecola/hello-go](https://hub.docker.com/r/jeffdecola/hello-go).
-
-Once image is is on DockerHub, you can run in interactive mode (-i)
-so you can `ctrl-c` to stop.
-
-Erase your local image first to prove it grabs it from dockerhub,
-
-```bash
-docker rmi jeffdecola/hello-go
-```
-
-Now run it. Docker will grab the image from dockerHub
-and start a docker container on your machine.
-
-```bash
-docker run -t -i jeffdecola/hello-go
-```
-
-## DEPLOY - APP TO MARATHON
+## UPDATE ???????????????????? DEPLOY - APP TO MARATHON
 
 The marathon .json file,
 
