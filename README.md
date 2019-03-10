@@ -62,11 +62,13 @@ Lets unit test the code,
 go test -cover ./... | tee /test/test_coverage.txt
 ```
 
+This script runs the above commands
 [/test/unit-tests.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/test/unit-tests.sh)
-runs the above commands.
+.
 
+This script runs the above commands in concourse
 [/ci/scripts/unit-test.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/unit-tests.sh)
-runs the above commands for concourse.
+.
 
 ## STEP 2 - BUILD (DOCKER IMAGE)
 
@@ -103,11 +105,13 @@ docker images
 
 It will be listed as `jeffdecola/hello-go-deploy-marathon`
 
+This script runs the above commands
 [/build-push/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/build-push/build-push.sh)
-runs the above commands.
+.
 
+This script runs the above commands in concourse
 [/ci/scripts/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/build-push.sh)
-runs the above commands for concourse.
+.
 
 You can test your dockerhub image,
 
@@ -137,11 +141,13 @@ Check you image at DockerHub. My image is
 More information about docker
 [here](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/orchestration/builds-deployment-containers/docker-cheat-sheet).
 
+This script runs the above commands
 [/build-push/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/build-push/build-push.sh)
-runs the above commands.
+.
 
+This script runs the above commands in concourse
 [/ci/scripts/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/build-push.sh)
-runs the above commands for concourse.
+.
 
 ## STEP 4 - DEPLOY (TO MARATHON)
 
@@ -157,12 +163,13 @@ curl -X PUT http://10.141.141.10:8080/v2/apps/hello-go-long-running \
 -H "Content-type: application/json"
 ```
 
+This script runs the above commands
 [/deploy/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/deploy/deploy.sh)
-runs the above commands.
+.
 
+This script runs the above commands in concourse
 [/ci/scripts/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/deploy.sh)
-runs the above commands for concourse.
-
+.
 ## TEST, BUILT, PUSH & DEPLOY USING CONCOURSE (OPTIONAL)
 
 For fun, I use concourse to automate the above steps.
