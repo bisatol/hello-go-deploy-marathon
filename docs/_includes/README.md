@@ -47,10 +47,10 @@ Lets unit test the code,
 go test -cover ./... | tee /test/test_coverage.txt
 ```
 
-This script runs the above commands
+This script runs the above command
 [/test/unit-tests.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/test/unit-tests.sh).
 
-This script runs the above commands in concourse
+This script runs the above command in concourse
 [/ci/scripts/unit-test.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/unit-tests.sh).
 
 ## STEP 2 - BUILD (DOCKER IMAGE)
