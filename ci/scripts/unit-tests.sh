@@ -5,13 +5,13 @@ echo " "
 
 if [ "$1" = "-debug" ]
 then
-    echo "unit-test.sh -debug (START)"
+    echo "unit-tests.sh -debug (START)"
     # set -e causes the shell to exit if any subcommand or pipeline returns a non-zero status. Needed for concourse.
     # set -x enables a mode of the shell where all executed commands are printed to the terminal.
     set -e -x
     echo " "
 else
-    echo "unit-test.sh (START)"
+    echo "unit-tests.sh (START)"
     # set -e causes the shell to exit if any subcommand or pipeline returns a non-zero status.  Needed for concourse.
     set -e
     echo " "
@@ -70,5 +70,5 @@ echo "Move text_coverage.txt to /coverage-results directory"
 mv "test/test_coverage.txt" "$GOPATH/coverage-results/"
 echo " "
 
-echo "unit-test.sh (END)"
+echo "unit-tests.sh (END)"
 echo " "
