@@ -67,13 +67,13 @@ then
     if (cmp -s temp-README.md docs/_includes/README.md)
     then
         commit="no"
-        echo "    No Changes are needed, Do not need to git commit and push"
+        echo "    No changes are needed, Do not need to git commit and push"
     else
-        echo "    Updates are needed."
+        echo "    Updates are needed"
     fi
     echo " "
 else
-    echo "    No, it does not exist."
+    echo "    No, it does not exist"
     echo "    Creating the _includes directory"
     mkdir docs/_includes
     echo " "

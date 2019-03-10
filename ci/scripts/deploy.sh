@@ -6,16 +6,13 @@ echo " "
 if [ "$1" = "-debug" ]
 then
     echo "deploy.sh -debug (START)"
-    echo " "
     # set -e causes the shell to exit if any subcommand or pipeline returns a non-zero status. Needed for concourse.
     # set -x enables a mode of the shell where all executed commands are printed to the terminal.
     set -e -x
     echo " "
 else
     echo "deploy.sh (START)"
-    echo " "
     # set -e causes the shell to exit if any subcommand or pipeline returns a non-zero status.  Needed for concourse.
-    echo " "
     set -e
     echo " "
 fi
