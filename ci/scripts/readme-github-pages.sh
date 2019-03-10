@@ -18,7 +18,8 @@ else
 fi
 
 echo "The goal is to git clone /hello-go-deploy-marathon to /hello-go-deploy-marathon-updated"
-echo "Then you can edit the /docs/_includes/README.md for GITHUB WEBPAGES in that directory"
+echo "Then script will edit the /docs/_includes/README.md for GITHUB WEBPAGES"
+echo "Finally push the changes in /docs/_includes/README.md to github"
 echo " "
 
 echo "At start, you should be in a /tmp/build/xxxxx directory with two folders:"
