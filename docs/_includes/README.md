@@ -20,7 +20,7 @@ To deploy to mesos/marathon you will need,
 
 As a bonus, you can use Concourse CI to run the scripts,
 
-* [concourse](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/operations-tools/continuous-integration-continuous-deployment/concourse-cheat-sheet)
+* [concourse](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/continuous-integration-continuous-deployment/concourse-cheat-sheet) (Optional)
 
 ## RUN
 
@@ -39,7 +39,7 @@ Hello everyone, count is: 3
 etc...
 ```
 
-## STEP 1 - TEST HI JEFF
+## STEP 1 - TEST
 
 Lets unit test the code,
 
@@ -47,9 +47,13 @@ Lets unit test the code,
 go test -cover ./... | tee /test/test_coverage.txt
 ```
 
-`/ci/scripts/unit-tests.sh` is used by concourse.
+[/test/unit-tests.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/test/unit-tests.sh)
+runs the above commands.
 
-## STEP 2 - BUILD
+[/ci/scripts/unit-test.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/unit-tests.sh)
+runs the above commands for concourse.
+
+## STEP 2 - BUILD (DOCKER IMAGE)
 
 Lets build a docker image from your binary /bin/hello-go.
 
@@ -84,9 +88,19 @@ docker images
 
 It will be listed as `jeffdecola/hello-go-deploy-marathon`
 
-This is the build script `/ci/scripts/build-push.sh` used by concourse.
+[/build-push/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/build-push/build-push.sh)
+runs the above commands.
 
-## STEP 3 - PUSH
+[/ci/scripts/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/build-push.sh)
+runs the above commands for concourse.
+
+You can test your dockerhub image,
+
+```bash
+docker run jeffdecola/hello-go-deploy-marathon
+```
+
+## STEP 3 - PUSH (TO DOCKERHUB)
 
 Lets push your built docker image to DockerHub.
 
@@ -105,44 +119,22 @@ docker push jeffdecola/hello-go-deploy-marathon
 Check you image at DockerHub. My image is
 [https://hub.docker.com/r/jeffdecola/hello-go-deploy-marathon](https://hub.docker.com/r/jeffdecola/hello-go-deploy-marathon).
 
-Erase your local docker image first to prove it pulls it from dockerhub,
+More information about docker
+[here](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/orchestration/builds-deployment-containers/docker-cheat-sheet).
 
-```bash
-docker rmi jeffdecola/hello-go-deploy-marathon
-```
+[/build-push/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/build-push/build-push.sh)
+runs the above commands.
 
-Now run it. Docker will grab the image from dockerHub
-and start a docker container on your machine.
-You can run in interactive mode (-i). Press `ctrl-c` to stop.
+[/ci/scripts/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/build-push.sh)
+runs the above commands for concourse.
 
-```bash
-docker run -t -i jeffdecola/hello-go-deploy-marathon
-```
+## STEP 4 - DEPLOY (TO MARATHON)
 
-This is the push script `/ci/scripts/build-push.sh` used by concourse.
+Lets pull the `hello-go-deploy-marathon` docker image
+from DockerHub to deploy to mesos/marathon.
 
-## STEP 4 - DEPLOY
-
-Lets pull the image from DockerHub to deploy to mesos/marathon.
-
-```go
-```
-
-This is the deploy script `/ci/scripts/deploy.sh` used by concourse.
-
-
-
-
-## UPDATE ???????????????????? DEPLOY - APP TO MARATHON
-
-The marathon .json file,
-
-[_`resource-marathon-deploy`_](https://github.com/JeffDeCola/resource-marathon-deploy)
-uses a Marathon .json file (app.json) to deploys the newly created docker image
-(APP) to Marathon.
-
-The `hello-go` docker image can now be manually deployed from
-DockerHub to mesos/marathon by using the command:
+This is actually very simple.  Send the `/deploy/app.json` file
+to mesos/marathon. That files tells marathon what to do.
 
 ```bash
 curl -X PUT http://10.141.141.10:8080/v2/apps/hello-go-long-running \
@@ -150,20 +142,20 @@ curl -X PUT http://10.141.141.10:8080/v2/apps/hello-go-long-running \
 -H "Content-type: application/json"
 ```
 
-The `app.json` file will pick the latest image a DockerHub
-`jeffdecola/hello-go:latest`.
+[/deploy/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/build-push/deploy.sh)
+runs the above commands.
 
-## TESTED, BUILT & PUSHED TO DOCKERHUB USING CONCOURSE
+[/ci/scripts/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/deploy.sh)
+runs the above commands for concourse.
 
-To automate the creation of the `hello-go` docker image, a concourse pipeline
-will,
+## TEST, BUILT, PUSH & DEPLOY USING CONCOURSE (OPTIONAL)
 
-* Update README.md for hello-go github webpage.
-* Unit Test the code.
-* Build the docker image `hello-go` and push to DockerHub.
-* Deploy the DockerHub image to mesos/marathon.
+For fun, I use concourse to automate the above steps.
 
-![IMAGE - hello-go concourse ci pipeline - IMAGE](pics/hello-go-pipeline.jpg)
+A pipeline file [pipeline.yml](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/pipeline.yml)
+shows the entire ci flow. Visually, it looks like,
+
+![IMAGE - hello-go-deploy-marathon concourse ci pipeline - IMAGE](pics/hello-go-deploy-marathon-pipeline.jpg)
 
 As seen in the pipeline diagram, the _resource-dump-to-dockerhub_ uses
 the resource type
@@ -173,15 +165,16 @@ to push a docker image to dockerhub.
 [_`resource-marathon-deploy`_](https://github.com/JeffDeCola/resource-marathon-deploy)
 deploys the newly created docker image to marathon.
 
-`hello-go` also contains a few extra concourse resources:
+`hello-go-deploy-marathon` also contains a few extra concourse resources:
 
 * A resource (_resource-slack-alert_) uses a [docker image](https://hub.docker.com/r/cfcommunity/slack-notification-resource)
   that will notify slack on your progress.
 * A resource (_resource-repo-status_) use a [docker image](https://hub.docker.com/r/dpb587/github-status-resource)
   that will update your git status for that particular commit.
-* A resource ([_`resource-template`_](https://github.com/JeffDeCola/resource-template))
-  that can be used as a starting point and template for creating other concourse
-  ci resources.
+
+I also added an extra concourse task where I update my github webpage as needed.
+You can see that concourse task (a shell script)
+[here](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/readme-github-pages.sh).
 
 For more information on using concourse for continuous integration,
 refer to my cheat sheet on [concourse](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/continuous-integration-continuous-deployment/concourse-cheat-sheet).
