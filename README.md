@@ -172,24 +172,34 @@ shows the entire ci flow. Visually, it looks like,
 
 ![IMAGE - hello-go-deploy-marathon concourse ci pipeline - IMAGE](docs/pics/hello-go-deploy-marathon-pipeline.jpg)
 
-As seen in the pipeline diagram, the _resource-dump-to-dockerhub_ uses
-the resource type
-[docker-image](https://github.com/concourse/docker-image-resource)
-to push a docker image to dockerhub.
+The jobs and tasks are as follows,
 
-[_`resource-marathon-deploy`_](https://github.com/JeffDeCola/resource-marathon-deploy)
-deploys the newly created docker image to marathon.
+* `job-readme-github-pages` runs task
+  [readme-github-pages.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/readme-github-pages.sh).
+* `job-unit-tests` runs task
+  [unit-tests.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/unit-tests.sh).
+* `job-build-push` runs task
+  [build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/build-push.sh).
+* `job-deploy` runs task
+  [deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/deploy.sh).
 
-`hello-go-deploy-marathon` also contains a few extra concourse resources:
+The concourse resources are as follows,
 
-* A resource (_resource-slack-alert_) uses a [docker image](https://hub.docker.com/r/cfcommunity/slack-notification-resource)
+* GIT PULL: _hello-go-deploy-marathon_ uses a resource type
+  [docker-image](https://github.com/concourse/git-resource)
+  pull repo from github.
+* PUSH: _resource-dump-to-dockerhub_ uses a resource type
+  [docker-image](https://hub.docker.com/r/concourse/docker-image-resource/)
+  to push a docker image to dockerhub.
+* DEPLOY: _resource-marathon_ users a resource type
+  [docker-image](https://hub.docker.com/r/ckaznocha/marathon-resource)
+  to deploys the newly created docker image to marathon.
+* SLACK ALERTS: _resource-slack-alert_ uses a resource type
+  [docker image](https://hub.docker.com/r/cfcommunity/slack-notification-resource)
   that will notify slack on your progress.
-* A resource (_resource-repo-status_) use a [docker image](https://hub.docker.com/r/dpb587/github-status-resource)
+* GIT STATUS: _resource-repo-status_ uses a resource type
+  [docker image](https://hub.docker.com/r/dpb587/github-status-resource)
   that will update your git status for that particular commit.
-
-I also added an extra concourse task where I update my github webpage as needed.
-You can see that concourse task (a shell script)
-[here](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/readme-github-pages.sh).
 
 For more information on using concourse for continuous integration,
 refer to my cheat sheet on [concourse](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/continuous-integration-continuous-deployment/concourse-cheat-sheet).
