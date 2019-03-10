@@ -157,7 +157,7 @@ curl -X PUT http://10.141.141.10:8080/v2/apps/hello-go-long-running \
 -H "Content-type: application/json"
 ```
 
-[/deploy/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/build-push/deploy.sh)
+[/deploy/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/deploy/deploy.sh)
 runs the above commands.
 
 [/ci/scripts/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/deploy.sh)
