@@ -172,7 +172,7 @@ shows the entire ci flow. Visually, it looks like,
 
 ![IMAGE - hello-go-deploy-marathon concourse ci pipeline - IMAGE](docs/pics/hello-go-deploy-marathon-pipeline.jpg)
 
-The jobs and tasks are as follows,
+The `jobs` and `tasks` are as follows,
 
 * `job-readme-github-pages` runs task
   [readme-github-pages.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/readme-github-pages.sh).
@@ -183,21 +183,21 @@ The jobs and tasks are as follows,
 * `job-deploy` runs task
   [deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/deploy.sh).
 
-The concourse resources are as follows,
+The concourse `resources type`s are as follows,
 
-* GIT PULL: _hello-go-deploy-marathon_ uses a resource type
-  [docker-image](https://github.com/concourse/git-resource)
-  pull repo from github.
-* PUSH: _resource-dump-to-dockerhub_ uses a resource type
+* `hello-go-deploy-marathon` uses a resource type
+  [docker-image](https://hub.docker.com/r/concourse/git-resource/)
+  to PULL a repo from github.
+* `resource-dump-to-dockerhub` uses a resource type
   [docker-image](https://hub.docker.com/r/concourse/docker-image-resource/)
-  to push a docker image to dockerhub.
-* DEPLOY: _resource-marathon_ users a resource type
+  to PUSH a docker image to dockerhub.
+* `resource-marathon` users a resource type
   [docker-image](https://hub.docker.com/r/ckaznocha/marathon-resource)
-  to deploys the newly created docker image to marathon.
-* SLACK ALERTS: _resource-slack-alert_ uses a resource type
+  to DEPLOY the newly created docker image to marathon.
+* `resource-slack-alert` uses a resource type
   [docker image](https://hub.docker.com/r/cfcommunity/slack-notification-resource)
   that will notify slack on your progress.
-* GIT STATUS: _resource-repo-status_ uses a resource type
+* `resource-repo-status` uses a resource type
   [docker image](https://hub.docker.com/r/dpb587/github-status-resource)
   that will update your git status for that particular commit.
 
