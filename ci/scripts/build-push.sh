@@ -18,7 +18,7 @@ else
 fi
 
 echo "The goal is to create a binary and place in /dist directory with a Dockerfile"
-echo "Then to create a docker image and push to DockerHub"
+echo "The concourse pipeline will build and push the docker image to DockerHub"
 echo " "
 echo "At start, you should be in a /tmp/build/xxxxx directory with two folders:"
 echo "   /hello-go-deploy-marathon"
