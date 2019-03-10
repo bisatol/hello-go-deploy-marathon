@@ -53,7 +53,7 @@ echo "Create a binary hello-go in /bin"
 go build -o bin/hello-go main.go
 echo ""
 
-echo "goto /dist directory"
+echo "cd to the /dist directory"
 cd "$GOPATH/dist"
 echo " "
 
@@ -66,7 +66,7 @@ cp "$GOPATH/src/github.com/JeffDeCola/hello-go-deploy-marathon/build-push/Docker
 echo " "
 
 echo "List whats in the /dist directory"
-ls -lat dist
+ls -la
 echo " "
 
 echo "The concourse pipeline will build and push the docker image to DockerHub"

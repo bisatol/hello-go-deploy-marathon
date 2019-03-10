@@ -81,8 +81,8 @@ jobs:
         text: "From hello-go-deploy-marathon: STARTED job-build-push in concourse ci."
     - put: resource-repo-status
       params: { state: "pending", description: "STARTED job-build-push in concourse ci.", commit: "hello-go-deploy-marathon" }
-    - task: task-build
-      file: hello-go-deploy-marathon/ci/tasks/task-build.yml
+    - task: task-build-push
+      file: hello-go-deploy-marathon/ci/tasks/task-build-push.yml
     - put: resource-dump-to-dockerhub
       params: { build: "dist"}
       on_success:
