@@ -1,7 +1,7 @@
 
 # PREREQUISITES
 
-I used go as my language.  Feel free to use another one,
+For this exercise, I used go.  Feel free to use a language of your choice,
 
 * [go](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/development/languages/go-cheat-sheet)
 
@@ -43,38 +43,39 @@ etc...
 
 Lets unit test the code,
 
-```go
+```bash
 go test -cover ./... | tee /test/test_coverage.txt
 ```
 
-[/test/unit-tests.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/test/unit-tests.sh)
-runs the above commands.
+This script runs the above commands
+[/test/unit-tests.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/test/unit-tests.sh).
 
-[/ci/scripts/unit-test.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/unit-tests.sh)
-runs the above commands for concourse.
+This script runs the above commands in concourse
+[/ci/scripts/unit-test.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/unit-tests.sh).
 
 ## STEP 2 - BUILD (DOCKER IMAGE)
 
-Lets build a docker image from your binary /bin/hello-go.
+Lets build a docker image from your binary `/bin/hello-go`.
 
 First, create a binary `hello-go`,
-I keep them in /bin and use .gitignore for this directory.
+I keep my binaries in `/bin`.
 
 ```bash
 go build -o bin/hello-go main.go
 ```
 
-Copy the binary in /build-push because docker needs it with Dockerfile
+Copy the binary to `/build-push` because docker needs it in
+same directory as Dockerfile,
 
 ```bash
 cp bin/hello-go build-push/.
+cd build-push
 ```
 
-Build your docker image from binary /bin/hello-go
-using /build-push/Dockerfile,
+Build your docker image from binary `hello-go`
+using `Dockerfile`,
 
 ```bash
-cd build-push
 docker build -t jeffdecola/hello-go-deploy-marathon .
 ```
 
@@ -88,21 +89,21 @@ docker images
 
 It will be listed as `jeffdecola/hello-go-deploy-marathon`
 
-[/build-push/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/build-push/build-push.sh)
-runs the above commands.
-
-[/ci/scripts/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/build-push.sh)
-runs the above commands for concourse.
-
 You can test your dockerhub image,
 
 ```bash
 docker run jeffdecola/hello-go-deploy-marathon
 ```
 
+This script runs the above commands
+[/build-push/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/build-push/build-push.sh).
+
+This script runs the above commands in concourse
+[/ci/scripts/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/build-push.sh).
+
 ## STEP 3 - PUSH (TO DOCKERHUB)
 
-Lets push your built docker image to DockerHub.
+Lets push your docker image to DockerHub.
 
 If you are not logged in, you need to login to dockerhub,
 
@@ -116,25 +117,23 @@ Once logged in you can push,
 docker push jeffdecola/hello-go-deploy-marathon
 ```
 
-Check you image at DockerHub. My image is
+Check you image at DockerHub. My image is located
 [https://hub.docker.com/r/jeffdecola/hello-go-deploy-marathon](https://hub.docker.com/r/jeffdecola/hello-go-deploy-marathon).
 
-More information about docker
-[here](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/orchestration/builds-deployment-containers/docker-cheat-sheet).
+This script runs the above commands
+[/build-push/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/build-push/build-push.sh).
 
-[/build-push/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/build-push/build-push.sh)
-runs the above commands.
-
-[/ci/scripts/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/build-push.sh)
-runs the above commands for concourse.
+This script runs the above commands in concourse
+[/ci/scripts/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/build-push.sh).
 
 ## STEP 4 - DEPLOY (TO MARATHON)
 
 Lets pull the `hello-go-deploy-marathon` docker image
-from DockerHub to deploy to mesos/marathon.
+from DockerHub and deploy to mesos/marathon.
 
-This is actually very simple.  Send the `/deploy/app.json` file
-to mesos/marathon. That files tells marathon what to do.
+This is actually very simple, you just PUT the
+[/deploy/app.json](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/deploy/app.json)
+file to mesos/marathon. This json file tells marathon what to do.
 
 ```bash
 curl -X PUT http://10.141.141.10:8080/v2/apps/hello-go-long-running \
@@ -142,11 +141,11 @@ curl -X PUT http://10.141.141.10:8080/v2/apps/hello-go-long-running \
 -H "Content-type: application/json"
 ```
 
-[/deploy/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/deploy/deploy.sh)
-runs the above commands.
+This script runs the above commands
+[/deploy/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/deploy/deploy.sh).
 
-[/ci/scripts/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/deploy.sh)
-runs the above commands for concourse.
+This script runs the above commands in concourse
+[/ci/scripts/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/deploy.sh).
 
 ## TEST, BUILT, PUSH & DEPLOY USING CONCOURSE (OPTIONAL)
 
@@ -157,7 +156,7 @@ shows the entire ci flow. Visually, it looks like,
 
 ![IMAGE - hello-go-deploy-marathon concourse ci pipeline - IMAGE](pics/hello-go-deploy-marathon-pipeline.jpg)
 
-The `jobs` and `tasks` are as follows,
+The `jobs` and `tasks` are,
 
 * `job-readme-github-pages` runs task
   [readme-github-pages.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/readme-github-pages.sh).
@@ -168,7 +167,7 @@ The `jobs` and `tasks` are as follows,
 * `job-deploy` runs task
   [deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/deploy.sh).
 
-The concourse `resources type`s are as follows,
+The concourse `resources type` are,
 
 * `hello-go-deploy-marathon` uses a resource type
   [docker-image](https://hub.docker.com/r/concourse/git-resource/)
