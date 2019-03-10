@@ -6,16 +6,13 @@ echo " "
 if [ "$1" = "-debug" ]
 then
     echo "readme-github-pages.sh -debug (START)"
-    echo " "
     # set -e causes the shell to exit if any subcommand or pipeline returns a non-zero status. Needed for concourse.
     # set -x enables a mode of the shell where all executed commands are printed to the terminal.
     set -e -x
     echo " "
 else
     echo "readme-github-pages.sh (START)"
-    echo " "
     # set -e causes the shell to exit if any subcommand or pipeline returns a non-zero status.  Needed for concourse.
-    echo " "
     set -e
     echo " "
 fi
@@ -90,28 +87,28 @@ then
 
     echo "update some global git variables"
     git config --global user.email "jeff@keeperlabs.com"
-     git config --global user.name "Jeff DeCola (Concourse)"
+    git config --global user.name "Jeff DeCola (Concourse)"
     echo " "
     git config --list
     echo " "
+
+    echo "ONLY git add and commit what is needed to protect from unforseen issues"
+    echo "git add"
+    git add docs/_includes/README.md
+    echo " "
+
+    echo "git commit"
+    git commit -m "Update docs/_includes/README.md for GitHub WebPage"
+    echo " "
+
+    echo "git status"
+    git status
+    echo " "
+    
+    echo "git push  - not needed in concourse since its done in pipeline"
+    echo " "
 fi
 
-echo "ONLY git add and commit what is needed to protect from unforseen issues"
-echo "git add"
-git add docs/_includes/README.md
-echo " "
-
-echo "git commit"
-git commit -m "Update docs/_includes/README.md for GitHub Page"
-echo " "
-
-echo "git status"
-git status
-echo " "
-    
-echo "git push  - not needed in concourse since its done in pipeline"
-echo " "
-   
 echo "remove temp-README.md"
 rm temp-README.md
 echo " "
