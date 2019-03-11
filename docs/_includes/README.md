@@ -1,7 +1,7 @@
 
 # PREREQUISITES
 
-For this exercise, I used go.  Feel free to use a language of your choice,
+For this exercise I used go.  Feel free to use a language of your choice,
 
 * [go](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/development/languages/go-cheat-sheet)
 
@@ -20,7 +20,8 @@ To deploy to mesos/marathon you will need,
 
 As a bonus, you can use Concourse CI to run the scripts,
 
-* [concourse](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/continuous-integration-continuous-deployment/concourse-cheat-sheet) (Optional)
+* [concourse](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/continuous-integration-continuous-deployment/concourse-cheat-sheet)
+(Optional)
 
 ## RUN
 
