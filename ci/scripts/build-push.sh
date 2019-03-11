@@ -72,5 +72,5 @@ echo " "
 echo "The concourse pipeline will build and push the docker image to DockerHub"
 echo " "
 
-echo "build-push.sh -concoure -debug (END)"
+echo "build-push.sh (END)"
 echo " "
