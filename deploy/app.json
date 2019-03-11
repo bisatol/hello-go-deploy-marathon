@@ -1,5 +1,5 @@
 {
-    "id": "hello-go-long-running",
+    "id": "hello-go-deploy-marathon-long-run",
     "cpus": 0.1,
     "mem": 4.0,
     "container": {
