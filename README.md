@@ -13,7 +13,7 @@ I also have other repos showing different deployments,
 
 * [hello-go-deploy-aws](https://github.com/JeffDeCola/hello-go-deploy-aws)
 * [hello-go-deploy-azure](https://github.com/JeffDeCola/hello-go-deploy-azure)
-* [hello-go-deploy-gca](https://github.com/JeffDeCola/hello-go-deploy-gca)
+* [hello-go-deploy-gae](https://github.com/JeffDeCola/hello-go-deploy-gae)
 * [hello-go-deploy-gce](https://github.com/JeffDeCola/hello-go-deploy-gce)
 
 The `hello-go-deploy-marathon`
