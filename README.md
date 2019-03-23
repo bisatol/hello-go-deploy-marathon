@@ -6,8 +6,8 @@
 [![Issue Count](https://codeclimate.com/github/JeffDeCola/hello-go-deploy-marathon/badges/issue_count.svg)](https://codeclimate.com/github/JeffDeCola/hello-go-deploy-marathon/issues)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://jeffdecola.mit-license.org)
 
-`hello-go-deploy-marathon` _uses Concourse CI to test, build, push (to DockerHub)
-and deploy a long running "hello-world" Docker Image to Mesos/Marathon._
+`hello-go-deploy-marathon` _will test, build, push (to DockerHub) and deploy
+a long running "hello-world" Docker Image to Mesos/Marathon._
 
 I also have other repos showing different deployments,
 
@@ -15,6 +15,8 @@ I also have other repos showing different deployments,
 * [hello-go-deploy-azure](https://github.com/JeffDeCola/hello-go-deploy-azure)
 * [hello-go-deploy-gae](https://github.com/JeffDeCola/hello-go-deploy-gae)
 * [hello-go-deploy-gce](https://github.com/JeffDeCola/hello-go-deploy-gce)
+* [hello-go-deploy-gke](https://github.com/JeffDeCola/hello-go-deploy-gke)
+* hello-go-deploy-marathon
 
 The `hello-go-deploy-marathon`
 [Docker Image](https://hub.docker.com/r/jeffdecola/hello-go-deploy-marathon)
@@ -157,7 +159,7 @@ Lets pull the `hello-go-deploy-marathon` docker image
 from DockerHub and deploy to mesos/marathon.
 
 This is actually very simple, you just PUT the
-[/deploy/app.json](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/deploy/app.json)
+[deploy-marathon/app.json](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/masterdeploy-marathon/app.json)
 file to mesos/marathon. This json file tells marathon what to do.
 
 ```bash
@@ -167,7 +169,7 @@ curl -X PUT http://10.141.141.10:8080/v2/apps/hello-go-long-running \
 ```
 
 This script runs the above commands
-[/deploy/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/deploy/deploy.sh).
+[deploy-marathon/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/masterdeploy-marathon/deploy.sh).
 
 This script runs the above commands in concourse
 [/ci/scripts/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/deploy.sh).
