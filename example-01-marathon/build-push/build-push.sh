@@ -27,7 +27,7 @@ go build -o bin/hello-go main.go
 echo " "
 
 echo "Copy the binary in /build-push because docker needs it with Dockerfile"
-cp /bin/hello-go /build-push/.
+cp bin/hello-go build-push/.
 echo " "
 
 echo "cd build-push"
@@ -35,11 +35,11 @@ cd build-push
 echo " "
 
 echo "Build your docker image from binary /bin/hello-go using /build-push/Dockerfile"
-docker build -t jeffdecola/ hello-go-deploy-marathon .
+docker build -t jeffdecola/hello-go-deploy-marathon .
 echo " "
 
 echo "Assuming you are logged in, lets push your built docker image to DockerHub"
-docker push jeffdecola/ hello-go-deploy-marathon
+docker push jeffdecola/hello-go-deploy-marathon
 echo
 
 echo "************************************************************************"
