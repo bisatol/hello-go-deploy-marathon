@@ -133,7 +133,7 @@ Lets pull the `hello-go-deploy-marathon` docker image
 from DockerHub and deploy to mesos/marathon.
 
 This is actually very simple, you just PUT the
-[/deploy/app.json](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/deploy/app.json)
+[deploy-marathon/app.json](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/masterdeploy-marathon/app.json)
 file to mesos/marathon. This json file tells marathon what to do.
 
 ```bash
@@ -143,7 +143,7 @@ curl -X PUT http://10.141.141.10:8080/v2/apps/hello-go-long-running \
 ```
 
 This script runs the above commands
-[/deploy/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/deploy/deploy.sh).
+[deploy-marathon/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/masterdeploy-marathon/deploy.sh).
 
 This script runs the above commands in concourse
 [/ci/scripts/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/deploy.sh).
