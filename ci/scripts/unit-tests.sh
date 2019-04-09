@@ -44,8 +44,8 @@ mkdir -p src/github.com/JeffDeCola/
 cp -R ./hello-go-deploy-marathon src/github.com/JeffDeCola/.
 echo " "
 
-echo "cd src/github.com/JeffDeCola/hello-go-deploy-marathon/example-01-marathon"
-cd src/github.com/JeffDeCola/hello-go-deploy-marathon/example-01-marathon
+echo "cd src/github.com/JeffDeCola/hello-go-deploy-marathon/example-01"
+cd src/github.com/JeffDeCola/hello-go-deploy-marathon/example-01
 echo " "
 
 echo "Check that you are set and everything is in the right place for go:"
