@@ -23,7 +23,7 @@ echo " "
 
 # List whats in the app.json file
 echo "List whats in the app.json file"
-cat hello-go-deploy-marathon/example-01-marathon/deploy-marathon/app.json
+cat hello-go-deploy-marathon/example-01/deploy-marathon/app.json
 echo " "
 
 echo "The concourse pipeline will put app.json to mesos/marathon"
