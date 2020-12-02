@@ -1,5 +1,5 @@
 #!/bin/sh
-# hello-go-deploy-marathon unit-test.sh
+# hello-go-deploy-marathon unit-tests.sh
 
 echo " "
 
