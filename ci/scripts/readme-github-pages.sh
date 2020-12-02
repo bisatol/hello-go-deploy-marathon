@@ -48,14 +48,20 @@ echo " "
 
 echo "FOR GITHUB WEBPAGES"
 echo "THE GOAL IS TO COPY README.md to /docs/_includes/README.md"
-echo " "
 
-echo "Remove everything before the second heading in README.md.  Place in temp-README.md"
+echo "    Create and Edit temp-README.md"
+echo "    Remove everything before the second heading in README.md.  Place in temp-README.md"
 sed '0,/GitHub Webpage/d' README.md > temp-README.md
-# Change the first heading ## to #
+echo "    Change the first heading ## to #"
 sed -i '0,/##/{s/##/#/}' temp-README.md
-# update the image links (remove docs/)
+echo "    Update the image links (remove docs/)"
 sed -i 's#IMAGE](docs/#IMAGE](#g' temp-README.md
+# Deal with the SVGS images
+# Add "https://raw.githubusercontent.com/JeffDeCola/REPONAME/master/svgs/" to "svgs/" 
+# I would rather do a relative link but remember, github pages only "sees" the /docs directory
+# So it's impossible to get into the svgs diretory. Hence we add the full link
+echo "    Update the image links for svgs (if you have them)"
+sed -i 's/svgs\//https:\/\/raw.githubusercontent.com\/JeffDeCola\/my-latex-graphs\/master\/svgs\//g' temp-README.md
 echo " "
 
 commit="yes"
@@ -86,19 +92,19 @@ then
     cp temp-README.md docs/_includes/README.md
     echo " "
 
-    echo "update some global git variables"
-    git config --global user.email "jeff@keeperlabs.com"
+    echo "Update some global git variables"
+    git config --global user.email "jeffdecola@gmail.com"
     git config --global user.name "Jeff DeCola (Concourse)"
     echo " "
     git config --list
     echo " "
 
-    echo "ONLY git add and commit what is needed to protect from unforseen issues"
-    echo "git add"
+    echo "git add and commit what is needed to protect from unforseen issues"
+    echo "git add docs/_includes/README.md"
     git add docs/_includes/README.md
     echo " "
 
-    echo "git commit"
+    echo " git commit -m \"Update docs/_includes/README.md for GitHub WebPage\""
     git commit -m "Update docs/_includes/README.md for GitHub WebPage"
     echo " "
 
@@ -106,11 +112,11 @@ then
     git status
     echo " "
     
-    echo "git push  - not needed in concourse since its done in pipeline"
+    echo "git push  - Not needed here since its done in pipeline"
     echo " "
 fi
 
-echo "remove temp-README.md"
+echo "rm temp-README.md"
 rm temp-README.md
 echo " "
 
