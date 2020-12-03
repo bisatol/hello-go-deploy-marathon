@@ -1,4 +1,4 @@
-# hello-go-deploy-marathon Dockerfile used to build docker image
+# hello-go-deploy-marathon example-01 Dockerfile used to build docker image
 
 # Multi-stage build to create a small docker image
 

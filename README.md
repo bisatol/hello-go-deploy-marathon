@@ -6,7 +6,7 @@
 [![Issue Count](https://codeclimate.com/github/JeffDeCola/hello-go-deploy-marathon/badges/issue_count.svg)](https://codeclimate.com/github/JeffDeCola/hello-go-deploy-marathon/issues)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://jeffdecola.mit-license.org)
 
-_Test, build, push (to DockerHub) and deploy
+_Test, create binary, build, push (to DockerHub) and deploy
 a long running "hello-world" Docker Image to Mesos/Marathon._
 
 I also have other repos showing different deployments,
@@ -66,20 +66,25 @@ To deploy to `mesos/marathon` you will need,
 * [marathon](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/orchestration/cluster-managers-resource-management-scheduling/marathon-cheat-sheet)
 * [mesos](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/orchestration/cluster-managers-resource-management-scheduling/mesos-cheat-sheet)
 
-As a bonus, you can use Concourse CI to run the scripts,
+As a bonus, you can use Concourse CI,
 
 * [concourse](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/operations-tools/continuous-integration-continuous-deployment/concourse-cheat-sheet)
 
 ## RUN
 
-To run from the command line,
+The following steps are located in
+[run.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/blob/master/example-01/run.sh).
+
+To run
+[main.go](https://github.com/JeffDeCola/hello-go-deploy-marathon/blob/master/example-01/main.go)
+from the command line,
 
 ```bash
 cd example-01
 go run main.go
 ```
 
-Every 2 seconds `hello-go-deploy-marathon` will print:
+Every 2 seconds it will print,
 
 ```bash
 Hello everyone, count is: 1
@@ -90,18 +95,41 @@ etc...
 
 ## STEP 1 - TEST
 
-Lets unit test the code for example-01,
+The following steps are located in
+[unit-tests.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/example-01/test/unit-tests.sh).
+
+To unit test the code,
 
 ```bash
 cd example-01
-go test -cover ./... | tee /test/test_coverage.txt
+go test -cover ./... | tee test/test_coverage.txt
+cat test/test_coverage.txt
 ```
 
-You could also run the script [unit-tests.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/example-01/test/unit-tests.sh).
+To create `_test` files,
 
-## STEP 2 - BUILD (DOCKER IMAGE VIA DOCKERFILE)
+```bash
+gotests -w -all main.go
+```
 
-We will be using a multi-stage build using a Dockerfile.
+## STEP 2 - CREATE BINARY
+
+```bash
+cd example-01
+go build -o bin/hello-go main.go
+```
+
+## STEP 3 - BUILD (DOCKER IMAGE VIA DOCKERFILE)
+
+The following steps are located in
+[build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/blob/master/example-01/build-push/build-push.sh).
+
+First, we assume the binary is already created in `/bin`,
+
+
+
+Next, we will be using a multi-stage build using a
+[Dockerfile](https://github.com/JeffDeCola/hello-go-deploy-marathon/blob/master/example-01/build-push/Dockerfile).
 The end result will be a very small docker image around 13MB.
 
 ```bash
@@ -137,11 +165,12 @@ docker logs hello-go-deploy-marathon
 docker images jeffdecola/hello-go-deploy-marathon:latest
 ```
 
-There is a `build-push.sh` script to build and push to DockerHub.
-There is also a script in the /ci folder to build and push
-in concourse.
+You could also run the script [build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/blob/master/example-01/build-push/build-push.sh).
 
-## STEP 3 - PUSH (TO DOCKERHUB)
+## STEP 4 - PUSH (TO DOCKERHUB)
+
+The following steps are located in
+[unit-tests.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/example-01/test/unit-tests.sh).
 
 Lets push your docker image to DockerHub.
 
@@ -166,7 +195,10 @@ This script runs the above commands
 This script runs the above commands in concourse
 [/ci/scripts/build-push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/build-push.sh).
 
-## STEP 4 - DEPLOY (TO MARATHON)
+## STEP 5 - DEPLOY (TO MARATHON)
+
+The following steps are located in
+[unit-tests.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/example-01/test/unit-tests.sh).
 
 Lets pull the `hello-go-deploy-marathon` docker image
 from DockerHub and deploy to mesos/marathon.
