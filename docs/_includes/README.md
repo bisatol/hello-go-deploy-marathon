@@ -104,9 +104,9 @@ docker exec -i -t hello-go-deploy-marathon /bin/bash
 docker logs hello-go-deploy-marathon
 ```
 
-### The Multi-Stage Build
+### Stage 1
 
-In **stage 1**, rather than copy a binary into a docker image (because
+In stage 1, rather than copy a binary into a docker image (because
 that can cause issue), **the Dockerfile will build the binary in the
 docker image.**
 
@@ -119,7 +119,9 @@ RUN go get -d -v
 RUN go build -o /go/bin/hello-go-deploy-marathon main.go
 ```
 
-In **stage 2**, the Dockerfile will copy the binary created in
+### Stage 2
+
+In stage 2, the Dockerfile will copy the binary created in
 stage 1 and place into a smaller docker base image based
 on `alpine`, which is around 13MB.
 
@@ -149,7 +151,7 @@ docker image at DockerHub.
 The following steps are located in
 [deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/blob/master/example-01/deploy-marathon/deploy.sh).
 
-Lets pull the `hello-go-deploy-marathon` docker image
+Pull the `hello-go-deploy-marathon` docker image
 from DockerHub and deploy to mesos/marathon.
 
 This is actually very simple, you just PUT the
