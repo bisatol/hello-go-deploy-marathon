@@ -138,17 +138,17 @@ We will be using a multi-stage build using a
 The end result will be a very small docker image around 13MB.
 
 ```bash
-cd example-01/build-push
-docker build -f Dockerfile -t jeffdecola/hello-go-deploy-marathon .
+cd example-01
+docker build -f build-push/Dockerfile -t jeffdecola/hello-go-deploy-marathon .
 ```
 
-You can check and test your docker image,
+You can check and test this docker image,
 
 ```bash
+docker images jeffdecola/hello-go-deploy-marathon:latest
 docker run --name hello-go-deploy-marathon -dit jeffdecola/hello-go-deploy-marathon
 docker exec -i -t hello-go-deploy-marathon /bin/bash
 docker logs hello-go-deploy-marathon
-docker images jeffdecola/hello-go-deploy-marathon:latest
 ```
 
 ### The Multi-Stage Build

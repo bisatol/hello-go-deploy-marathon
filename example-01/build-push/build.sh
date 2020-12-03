@@ -18,10 +18,14 @@ else
     echo " "
 fi
 
+echo "cd to where go code is"
+echo "cd .."
+cd ..
+
 echo "Build your docker image using Dockerfile"
 echo "NOTE: The binary is built using this step"
-echo "docker build -f Dockerfile -t jeffdecola/hello-go-deploy-marathon ."
-docker build -f Dockerfile -t jeffdecola/hello-go-deploy-marathon .
+echo "docker build -f build-push/Dockerfile -t jeffdecola/hello-go-deploy-marathon ."
+docker build -f build-push/Dockerfile -t jeffdecola/hello-go-deploy-marathon .
 echo " "
 
 echo "Check Docker Image size"
