@@ -19,7 +19,7 @@ else
 fi
 
 echo "Create a binary hello-go in /bin"
-echo "    Kick off executable with ./hello.go"
+echo "    Kick off executable with ./hello-go"
 go build -o hello-go ../main.go
 echo " "
 
