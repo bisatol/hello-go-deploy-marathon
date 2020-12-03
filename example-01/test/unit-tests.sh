@@ -1,5 +1,5 @@
 #!/bin/sh -e
-# hello-go-deploy-marathon unit-tests.sh
+# hello-go-deploy-marathon example-01 unit-tests.sh
 
 echo " "
 
@@ -22,7 +22,7 @@ echo "If you need to generate _test files run"
 echo "   gotests -w -all main.go"
 echo " "
 
-echo "cd up to code"
+echo "cd up to code level"
 cd ..
 echo " "
 

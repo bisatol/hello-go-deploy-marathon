@@ -1,29 +1,29 @@
 #!/bin/sh -e
-# hello-go-deploy-marathon example-01 run.sh
+# hello-go-deploy-marathon example-01 create-binary.sh
 
 echo " "
 
 if [ "$1" = "-debug" ]
 then
     echo "************************************************************************"
-    echo "* run.sh -debug (START) ************************************************"
+    echo "* create-binary.sh -debug (START) **************************************"
     echo "************************************************************************"
     # set -x enables a mode of the shell where all executed commands are printed to the terminal.
     set -x
     echo " "
 else
     echo "************************************************************************"
-    echo "* run.sh (START) *******************************************************"
+    echo "* create-binary.sh (START) *********************************************"
     echo "************************************************************************"
     echo " "
 fi
 
-echo "go run main.go"
-echo " "
-go run main.go
+echo "Create a binary hello-go in /bin"
+echo "    Kick off executable with ./hello.go"
+go build -o hello-go ../main.go
 echo " "
 
 echo "************************************************************************"
-echo "* run.sh (END) **************************************************"
+echo "* create-binary.sh (END) ***********************************************"
 echo "************************************************************************"
 echo " "

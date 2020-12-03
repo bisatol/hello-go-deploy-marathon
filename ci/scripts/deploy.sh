@@ -17,13 +17,22 @@ else
     echo " "
 fi
 
+echo "GOAL ----------------------------------------------------------------------------------"
+echo " "
+
 echo "The goal is to send the app.json file to marathon"
 echo "This is done in the marathon resource"
 echo " "
 
-# List whats in the app.json file
+echo "CHECK THINGS --------------------------------------------------------------------------"
+echo " "
+
 echo "List whats in the app.json file"
+echo "cat hello-go-deploy-marathon/example-01/deploy-marathon/app.json"
 cat hello-go-deploy-marathon/example-01/deploy-marathon/app.json
+echo " "
+
+echo "DEPLOY DONE IN PIPELINE ---------------------------------------------------------------"
 echo " "
 
 echo "The concourse pipeline will put app.json to mesos/marathon"
