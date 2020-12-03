@@ -22,7 +22,7 @@ echo "If you need to generate _test files run"
 echo "   gotests -w -all main.go"
 echo " "
 
-echo "cd up to code"
+echo "cd up to code level"
 cd ..
 echo " "
 
