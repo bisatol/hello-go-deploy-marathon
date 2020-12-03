@@ -17,9 +17,15 @@ else
     echo " "
 fi
 
+echo "GOAL ----------------------------------------------------------------------------------"
+echo " "
+
 echo "The goal is to git clone /hello-go-deploy-marathon to /hello-go-deploy-marathon-updated"
 echo "Then script will edit the /docs/_includes/README.md for GITHUB WEBPAGES"
 echo "Finally push the changes in /docs/_includes/README.md to github"
+echo " "
+
+echo "CHECK THINGS --------------------------------------------------------------------------"
 echo " "
 
 echo "At start, you should be in a /tmp/build/xxxxx directory with two folders:"
@@ -34,6 +40,9 @@ echo "List whats in the current directory"
 ls -la
 echo " "
 
+echo "GIT CLONE -----------------------------------------------------------------------------"
+echo " "
+
 echo "git clone hello-go-deploy-marathon to hello-go-deploy-marathon-updated"
 git clone hello-go-deploy-marathon hello-go-deploy-marathon-updated
 echo " "
@@ -46,22 +55,26 @@ echo "List whats in the current directory"
 ls -la
 echo " "
 
-echo "FOR GITHUB WEBPAGES"
-echo "THE GOAL IS TO COPY README.md to /docs/_includes/README.md"
+echo "EDIT README FOR GITHUB WEBPAGES -------------------------------------------------------"
+echo " "
 
-echo "    Create and Edit temp-README.md"
+echo "Copy README.md to /docs/_includes/README.md and edit"
 echo "    Remove everything before the second heading in README.md.  Place in temp-README.md"
+echo "    sed '0,/GitHub Webpage/d' README.md > temp-README.md"
 sed '0,/GitHub Webpage/d' README.md > temp-README.md
 echo "    Change the first heading ## to #"
+echo "    sed -i '0,/##/{s/##/#/}' temp-README.md"
 sed -i '0,/##/{s/##/#/}' temp-README.md
 echo "    Update the image links (remove docs/)"
+echo "    sed -i 's#IMAGE](docs/#IMAGE](#g' temp-README.md"
 sed -i 's#IMAGE](docs/#IMAGE](#g' temp-README.md
-# Deal with the SVGS images
-# Add "https://raw.githubusercontent.com/JeffDeCola/REPONAME/master/svgs/" to "svgs/" 
-# I would rather do a relative link but remember, github pages only "sees" the /docs directory
-# So it's impossible to get into the svgs diretory. Hence we add the full link
 echo "    Update the image links for svgs (if you have them)"
+echo "    Add \"https://raw.githubusercontent.com/JeffDeCola/REPONAME/master/svgs/\" to \"svgs/\""
+echo "    sed -i 's/svgs\//https:\/\/raw.githubusercontent.com\/JeffDeCola\/my-latex-graphs\/master\/svgs\//g' temp-README.md"
 sed -i 's/svgs\//https:\/\/raw.githubusercontent.com\/JeffDeCola\/my-latex-graphs\/master\/svgs\//g' temp-README.md
+echo " "
+
+echo "GIT COMMIT OR NOT ---------------------------------------------------------------------"
 echo " "
 
 commit="yes"
@@ -88,11 +101,13 @@ fi
 
 if [ "$commit" = "yes" ]
 then
-    echo "cp updated temp-README.md to docs/_includes/README.md"
+    echo "cp temp-README.md docs/_includes/README.md"
     cp temp-README.md docs/_includes/README.md
     echo " "
 
     echo "Update some global git variables"
+    echo "git config --global user.email \"jeffdecola@gmail.com\""
+    echo "git config --global user.name \"Jeff DeCola (Concourse)\""
     git config --global user.email "jeffdecola@gmail.com"
     git config --global user.name "Jeff DeCola (Concourse)"
     echo " "
@@ -115,6 +130,9 @@ then
     echo "git push  - Not needed here since its done in pipeline"
     echo " "
 fi
+
+echo "CLEAN UP ------------------------------------------------------------------------------"
+echo " "
 
 echo "rm temp-README.md"
 rm temp-README.md
