@@ -8,8 +8,8 @@
 
 FROM golang:alpine AS builder
 
-# Install git.
-# Git is required for fetching the dependencies.
+# Install git
+# Git is required for fetching the dependencies
 RUN apk update && apk add --no-cache git
 
 # SET WORKING DIRECTORY AND PLACE YOUR CODE IN
@@ -19,10 +19,10 @@ COPY . .
 # CHECK
 RUN ls -lat $GOPATH/src/github.com/jeffdecola/hello-go-deploy-marathon/
 
-# Fetch dependencies using go get.
+# Fetch dependencies using go get
 RUN go get -d -v
 
-# Build the binary.
+# Build the binary
 RUN go build -o /go/bin/hello-go-deploy-marathon main.go
 
 ###############################
@@ -42,5 +42,5 @@ WORKDIR /app
 # Add the ailibty to /bin/bash in alpine
 RUN apk add --update bash
 
-# Run the binary.
+# Run the binary
 ENTRYPOINT ["/app/hello-go-deploy-marathon"]
