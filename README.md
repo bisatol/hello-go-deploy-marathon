@@ -31,11 +31,11 @@ Table of Contents,
 
 * [PREREQUISITES](https://github.com/JeffDeCola/hello-go-deploy-marathon#prerequisites)
 * [RUN](https://github.com/JeffDeCola/hello-go-deploy-marathon#run)
+* [CREATE BINARY](https://github.com/JeffDeCola/hello-go-deploy-marathon#create-binary)
 * [STEP 1 - TEST](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-1---test)
-* [STEP 2 - CREATE BINARY](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-2---create-binary)
-* [STEP 3 - BUILD (DOCKER IMAGE VIA DOCKERFILE)](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-3---build-docker-image-via-dockerfile)
-* [STEP 4 - PUSH (TO DOCKERHUB)](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-4---push-to-dockerhub)
-* [STEP 5 - DEPLOY (TO MARATHON)](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-5---deploy-to-marathon)
+* [STEP 2 - BUILD (DOCKER IMAGE VIA DOCKERFILE)](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-2---build-docker-image-via-dockerfile)
+* [STEP 3 - PUSH (TO DOCKERHUB)](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-3---push-to-dockerhub)
+* [STEP 4 - DEPLOY (TO MARATHON)](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-4---deploy-to-marathon)
 * [CONTINUOUS INTEGRATION & DEPLOYMENT](https://github.com/JeffDeCola/hello-go-deploy-marathon#continuous-integration--deployment)
 
 Documentation and references,
@@ -194,26 +194,21 @@ docker image at DockerHub.
 ## STEP 4 - DEPLOY (TO MARATHON)
 
 The following steps are located in
-[unit-tests.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/example-01/test/unit-tests.sh).
+[deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/blob/master/example-01/deploy-marathon/deploy.sh).
 
 Lets pull the `hello-go-deploy-marathon` docker image
 from DockerHub and deploy to mesos/marathon.
 
 This is actually very simple, you just PUT the
-[deploy-marathon/app.json](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/masterdeploy-marathon/app.json)
-file to mesos/marathon. This json file tells marathon what to do.
+[app.json](https://github.com/JeffDeCola/hello-go-deploy-marathon/blob/master/example-01/deploy-marathon/app.json)
+file to mesos/marathon. This .json file tells marathon what to do.
 
 ```bash
-curl -X PUT http://10.141.141.10:8080/v2/apps/hello-go-long-running \
+cd deploy-marathon
+curl -X PUT http://192.168.20.117:8080/v2/apps/hello-go-long-running \
 -d @app.json \
 -H "Content-type: application/json"
 ```
-
-This script runs the above commands
-[deploy-marathon/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/masterdeploy-marathon/deploy.sh).
-
-This script runs the above commands in concourse
-[/ci/scripts/deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/ci/scripts/deploy.sh).
 
 ## CONTINUOUS INTEGRATION & DEPLOYMENT
 
