@@ -1,5 +1,5 @@
 #!/bin/sh -e
-# hello-go-deploy-marathon build.sh
+# hello-go-deploy-marathon example-01 build.sh
 
 echo " "
 
