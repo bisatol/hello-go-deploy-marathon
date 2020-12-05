@@ -29,10 +29,11 @@ I also have other repos showing different deployments,
 
 Table of Contents,
 
+* [OVERVIEW](https://github.com/JeffDeCola/hello-go-deploy-marathon#overview)
 * [PREREQUISITES](https://github.com/JeffDeCola/hello-go-deploy-marathon#prerequisites)
 * [RUN](https://github.com/JeffDeCola/hello-go-deploy-marathon#run)
 * [CREATE BINARY](https://github.com/JeffDeCola/hello-go-deploy-marathon#create-binary)
-* [CONTINUOUS INTEGRATION & DEPLOYMENT](https://github.com/JeffDeCola/hello-go-deploy-marathon#continuous-integration--deployment)
+* [TEST, BUILD, PUSH & DEPLOY](https://github.com/JeffDeCola/hello-go-deploy-marathon#test-build-push--deploy)
   * [STEP 1 - TEST](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-1---test)
   * [STEP 2 - BUILD (DOCKER IMAGE VIA DOCKERFILE)](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-2---build-docker-image-via-dockerfile)
   * [STEP 3 - PUSH (TO DOCKERHUB)](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-3---push-to-dockerhub)
@@ -48,11 +49,29 @@ Documentation and references,
 _built with
 [concourse ci](https://github.com/JeffDeCola/hello-go-deploy-marathon/blob/master/ci-README.md)_
 
+## OVERVIEW
+
+Every 2 seconds it will print,
+
+```txt
+    INFO[0000] Let's Start this!
+    Hello everyone, count is: 1
+    Hello everyone, count is: 2
+    Hello everyone, count is: 3
+    etc...
+```
+
 ## PREREQUISITES
 
 I used the following language,
 
 * [go](https://github.com/JeffDeCola/my-cheat-sheets/tree/master/software/development/languages/go-cheat-sheet)
+
+You will need the following go packages,
+
+```bash
+go get -u -v github.com/sirupsen/logrus
+```
 
 To build a docker image you will need docker on your machine,
 
@@ -85,22 +104,10 @@ cd example-01
 go run main.go
 ```
 
-Every 2 seconds it will print,
-
-```bash
-Hello everyone, count is: 1
-Hello everyone, count is: 2
-Hello everyone, count is: 3
-etc...
-```
-
 ## CREATE BINARY
 
 The following steps are located in
 [create-binary.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/blob/master/example-01/bin/create-binary.sh).
-
-You can create a binary, but this will not be used
-since it's created during the docker image build.
 
 ```bash
 cd example-01
@@ -109,7 +116,10 @@ cd bin
 ./hello-go
 ```
 
-## CONTINUOUS INTEGRATION & DEPLOYMENT
+This binary will not be used during a docker build
+since it creates it's own.
+
+## TEST, BUILD, PUSH & DEPLOY
 
 Refer to
 [ci-README.md](https://github.com/JeffDeCola/hello-go-deploy-marathon/blob/master/ci-README.md)
