@@ -41,9 +41,9 @@ Table of Contents,
 
 Documentation and references,
 
-* The `hello-go-deploy-marathon`
-  [Docker Image](https://hub.docker.com/r/jeffdecola/hello-go-deploy-marathon)
-  on DockerHub
+* The
+  [hello-go-deploy-marathon](https://hub.docker.com/r/jeffdecola/hello-go-deploy-marathon)
+  docker image on DockerHub
 
 [GitHub Webpage](https://jeffdecola.github.io/hello-go-deploy-marathon/)
 _built with
