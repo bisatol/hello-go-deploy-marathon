@@ -32,12 +32,11 @@ Table of Contents,
 * [PREREQUISITES](https://github.com/JeffDeCola/hello-go-deploy-marathon#prerequisites)
 * [RUN](https://github.com/JeffDeCola/hello-go-deploy-marathon#run)
 * [CREATE BINARY](https://github.com/JeffDeCola/hello-go-deploy-marathon#create-binary)
-* [TEST, BUILD, PUSH DEPLOY](https://github.com/JeffDeCola/hello-go-deploy-marathon#test-build-push-deploy)
+* [CONTINUOUS INTEGRATION & DEPLOYMENT](https://github.com/JeffDeCola/hello-go-deploy-marathon#continuous-integration--deployment)
   * [STEP 1 - TEST](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-1---test)
   * [STEP 2 - BUILD (DOCKER IMAGE VIA DOCKERFILE)](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-2---build-docker-image-via-dockerfile)
   * [STEP 3 - PUSH (TO DOCKERHUB)](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-3---push-to-dockerhub)
   * [STEP 4 - DEPLOY (TO MARATHON)](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-4---deploy-to-marathon)
-* [CONTINUOUS INTEGRATION & DEPLOYMENT](https://github.com/JeffDeCola/hello-go-deploy-marathon#continuous-integration--deployment)
 
 Documentation and references,
 
