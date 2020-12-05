@@ -96,11 +96,11 @@ etc...
 
 ## CREATE BINARY
 
-If you want, you can create a binary, but this will not be used since
-it is created during the docker image build.
-
 The following steps are located in
 [create-binary.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/blob/master/example-01/bin/create-binary.sh).
+
+You can create a binary, but this will not be used
+since it's created during the docker image build.
 
 ```bash
 cd example-01
@@ -113,7 +113,7 @@ cd bin
 
 Refer to
 [ci-README.md](https://github.com/JeffDeCola/hello-go-deploy-marathon/blob/master/ci-README.md)
-for how I automated this process.
+on how I automated this process.
 
 ### STEP 1 - TEST
 
