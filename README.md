@@ -33,11 +33,12 @@ Table of Contents,
 * [PREREQUISITES](https://github.com/JeffDeCola/hello-go-deploy-marathon#prerequisites)
 * [RUN](https://github.com/JeffDeCola/hello-go-deploy-marathon#run)
 * [CREATE BINARY](https://github.com/JeffDeCola/hello-go-deploy-marathon#create-binary)
-* [TEST, BUILD, PUSH & DEPLOY](https://github.com/JeffDeCola/hello-go-deploy-marathon#test-build-push--deploy)
-  * [STEP 1 - TEST](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-1---test)
-  * [STEP 2 - BUILD (DOCKER IMAGE VIA DOCKERFILE)](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-2---build-docker-image-via-dockerfile)
-  * [STEP 3 - PUSH (TO DOCKERHUB)](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-3---push-to-dockerhub)
-  * [STEP 4 - DEPLOY (TO MARATHON)](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-4---deploy-to-marathon)
+* [STEP 1 - TEST](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-1---test)
+* [STEP 2 - BUILD (DOCKER IMAGE VIA DOCKERFILE)](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-2---build-docker-image-via-dockerfile)
+
+* [STEP 3 - PUSH (TO DOCKERHUB)](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-3---push-to-dockerhub)
+* [STEP 4 - DEPLOY (TO MARATHON)](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-4---deploy-to-marathon)
+* [CONTINUOUS INTEGRATION & DEPLOYMENT](https://github.com/JeffDeCola/hello-go-deploy-marathon#continuous-integration--deployment)
 
 Documentation and references,
 
@@ -119,13 +120,7 @@ cd bin
 This binary will not be used during a docker build
 since it creates it's own.
 
-## TEST, BUILD, PUSH & DEPLOY
-
-Refer to
-[ci-README.md](https://github.com/JeffDeCola/hello-go-deploy-marathon/blob/master/ci-README.md)
-on how I automated this process.
-
-### STEP 1 - TEST
+## STEP 1 - TEST
 
 The following steps are located in
 [unit-tests.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/tree/master/example-01/test/unit-tests.sh).
@@ -144,7 +139,7 @@ To create `_test` files,
 gotests -w -all main.go
 ```
 
-### STEP 2 - BUILD (DOCKER IMAGE VIA DOCKERFILE)
+## STEP 2 - BUILD (DOCKER IMAGE VIA DOCKERFILE)
 
 The following steps are located in
 [build.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/blob/master/example-01/build-push/build.sh).
@@ -167,7 +162,7 @@ docker exec -i -t hello-go-deploy-marathon /bin/bash
 docker logs hello-go-deploy-marathon
 ```
 
-#### Stage 1
+### Stage 1
 
 In stage 1, rather than copy a binary into a docker image (because
 that can cause issue), **the Dockerfile will build the binary in the
@@ -182,13 +177,13 @@ RUN go get -d -v
 RUN go build -o /go/bin/hello-go-deploy-marathon main.go
 ```
 
-#### Stage 2
+### Stage 2
 
 In stage 2, the Dockerfile will copy the binary created in
 stage 1 and place into a smaller docker base image based
 on `alpine`, which is around 13MB.
 
-### STEP 3 - PUSH (TO DOCKERHUB)
+## STEP 3 - PUSH (TO DOCKERHUB)
 
 The following steps are located in
 [push.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/blob/master/example-01/build-push/push.sh).
@@ -209,7 +204,7 @@ Check the
 [hello-go-deploy-marathon](https://hub.docker.com/r/jeffdecola/hello-go-deploy-marathon)
 docker image at DockerHub.
 
-### STEP 4 - DEPLOY (TO MARATHON)
+## STEP 4 - DEPLOY (TO MARATHON)
 
 The following steps are located in
 [deploy.sh](https://github.com/JeffDeCola/hello-go-deploy-marathon/blob/master/example-01/deploy-marathon/deploy.sh).
@@ -227,3 +222,9 @@ curl -X PUT http://192.168.20.117:8080/v2/apps/hello-go-long-running \
 -d @app.json \
 -H "Content-type: application/json"
 ```
+
+## CONTINUOUS INTEGRATION & DEPLOYMENT
+
+Refer to
+[ci-README.md](https://github.com/JeffDeCola/hello-go-deploy-marathon/blob/master/ci-README.md)
+on how I automated the above steps.
