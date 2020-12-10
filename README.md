@@ -35,7 +35,6 @@ Table of Contents,
 * [CREATE BINARY](https://github.com/JeffDeCola/hello-go-deploy-marathon#create-binary)
 * [STEP 1 - TEST](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-1---test)
 * [STEP 2 - BUILD (DOCKER IMAGE VIA DOCKERFILE)](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-2---build-docker-image-via-dockerfile)
-
 * [STEP 3 - PUSH (TO DOCKERHUB)](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-3---push-to-dockerhub)
 * [STEP 4 - DEPLOY (TO MARATHON)](https://github.com/JeffDeCola/hello-go-deploy-marathon#step-4---deploy-to-marathon)
 * [CONTINUOUS INTEGRATION & DEPLOYMENT](https://github.com/JeffDeCola/hello-go-deploy-marathon#continuous-integration--deployment)
@@ -162,10 +161,8 @@ docker exec -i -t hello-go-deploy-marathon /bin/bash
 docker logs hello-go-deploy-marathon
 ```
 
-### Stage 1
-
-In stage 1, rather than copy a binary into a docker image (because
-that can cause issue), **the Dockerfile will build the binary in the
+In **stage 1**, rather than copy a binary into a docker image (because
+that can cause issues), **the Dockerfile will build the binary in the
 docker image.**
 
 If you open the DockerFile you can see it will get the dependencies and
@@ -177,9 +174,7 @@ RUN go get -d -v
 RUN go build -o /go/bin/hello-go-deploy-marathon main.go
 ```
 
-### Stage 2
-
-In stage 2, the Dockerfile will copy the binary created in
+In **stage 2**, the Dockerfile will copy the binary created in
 stage 1 and place into a smaller docker base image based
 on `alpine`, which is around 13MB.
 
